@@ -15,25 +15,11 @@
                     <p:inputText value="#{cargoController.cargo.nome}" id="txtCargoNome" 
                                  title="Nome do cargo (Ex: Programador)"/>
 
-                    <h:outputText value="Técnica: " title="A(s) habilidade(s) que o cargo exige."/>
+                    <h:outputText value="Habilidade: " title="A(s) habilidade(s) que o cargo exige."/>
                     <p:selectOneMenu value="#{cargoController.habilidade}" id="cmbHabCargo"
                                      converter="habilidadeConverter" styleClass="input-large">
                         <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-                        <f:selectItems value="#{habilidadeController.habilidadesTecnicas}" var="h"
-                                       itemValue="#{h}" itemLabel="#{h.nome}" />
-                    </p:selectOneMenu>
-                    <h:outputText value="Idioma: " title="A(s) habilidade(s) que o cargo exige."/>
-                    <p:selectOneMenu value="#{cargoController.habilidade}" id="cmbHabCargo1"
-                                     converter="habilidadeConverter" styleClass="input-large">
-                        <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-                        <f:selectItems value="#{habilidadeController.habilidadesIdioma}" var="h"
-                                       itemValue="#{h}" itemLabel="#{h.nome}" />
-                    </p:selectOneMenu>
-                    <h:outputText value="Dominio: " title="A(s) habilidade(s) que o cargo exige."/>
-                    <p:selectOneMenu value="#{cargoController.habilidade}" id="cmbHabCargo2"
-                                     converter="habilidadeConverter" styleClass="input-large">
-                        <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-                        <f:selectItems value="#{habilidadeController.habilidadesDominio}" var="h"
+                        <f:selectItems value="#{habilidadeController.habilidades}" var="h"
                                        itemValue="#{h}" itemLabel="#{h.nome}" />
                     </p:selectOneMenu>
                 </h:panelGrid>
