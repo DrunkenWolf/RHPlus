@@ -1,0 +1,320 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/dash.xhtml">
+        <ui:define name="menu">
+            <li>
+                <a href="../dash.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="../usuarios/index.html"><i class="fa fa-fw fa-user"></i> Usuários</a>
+            </li>
+            <li class="active">
+                <a href="index.html"><i class="fa fa-fw fa-users"></i> Colaboradores</a>
+            </li>
+            <li>
+                <a href="../habilidade/"><i class="fa fa-fw fa-tasks"></i> Habilidades</a>
+            </li>
+            <h:panelGrid columns="1" style="width:100%;"
+                         rendered="#{sessionController.usuarioLogado.tipoUsuario.codigo != sessionController.tipoUsuarioFuncionario}" >
+                <li>
+                    <a href="../projeto/index.html" id="link-projeto" >
+                        <i class="fa fa-fw fa-laptop"></i> Projetos
+                    </a>
+                </li>
+            </h:panelGrid>
+            <li>
+                <a href="../cargo/"><i class="fa fa-fw fa-book"></i> Perfis de Competência</a>
+            </li>
+            <li>
+                <a href="../treinamento/index.html"><i class="fa fa-fw fa-bullhorn"></i> Treinamentos</a>
+            </li>
+        </ui:define>
+        <ui:define name="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" style="margin-top: 0;">
+                        Incluir Colaborador
+                    </h1>
+                </div>
+            </div>
+            <h:form id="frmNovoFuncionario"  prependId="false">
+                <!--<p:messages autoUpdate="true" showIcon="false" />-->
+                <p:wizard id="wzdNovoFuncionario" widgetVar="wzd" 
+                          flowListener="#{funcionarioController.onFlowProcess}" nextLabel="Próximo"
+                          backLabel="Voltar">
+                    <p:tab id="pessoal" title="Pessoal">
+                        <p:panel header="Informações pessoais">
+                            <h:panelGrid id="grid" columns="3">                                
+                                <h:outputText value="Nome*:" />
+                                <p:inputText id="txtNome" value="#{funcionarioController.funcionario.nome}"
+                                             styleClass="input-large" required="false" requiredMessage="O campo nome é obrigatório."/>
+                                <p:message for="txtNome" display="text"/>
+
+                                <h:outputText value="CPF*:" />
+                                <p:inputMask id="txtCpf" value="#{funcionarioController.funcionario.cpf}"
+                                             mask="999.999.999-99" required="false" requiredMessage="O campo CPF é obrigatório."/>
+                                <p:message for="txtCpf" display="text"/>
+
+                                <h:outputText value="Sexo*:" />
+                                <p:selectOneMenu id="txtSexo" value="#{funcionarioController.funcionario.sexo}" 
+                                                 required="false" requiredMessage="O campo sexo é obrigatório.">
+                                    <f:selectItem itemLabel="Selecione" noSelectionOption="false" />
+                                    <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+                                    <f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+                                </p:selectOneMenu>
+                                <p:message for="txtSexo" display="text"/>
+
+                                <h:outputText value="Nascimento*:" />
+                                <p:inputMask id="txtDataNascimento" value="#{funcionarioController.funcionario.dataNascimento}"
+                                             mask="99/99/9999" required="false" requiredMessage="O campo nascimento é obrigatório."/>
+                                <p:message for="txtDataNascimento" display="text"/>
+
+                                <h:outputText value="RG*:" />
+                                <p:inputText id="txtRg" required="false" value="#{funcionarioController.funcionario.rg}"
+                                             requiredMessage="O campo RG é obrigatório."/>
+                                <p:message for="txtRg" display="text"/>
+
+                                <h:outputText value="É Freelancer: " />
+                                <p:selectBooleanCheckbox value="#{funcionarioController.funcionario.ehFreelancer}" >
+                                    <p:ajax event="change"  update="grdDataAdmissao" />
+                                </p:selectBooleanCheckbox>
+
+                            </h:panelGrid>
+                            <h:panelGrid id="grdDataAdmissao" columns="3">
+                                <h:outputText id="lblDataAdmissao" value="Data de admissão*:"
+                                              rendered="#{!funcionarioController.funcionario.ehFreelancer}"/>
+                                <p:inputMask id="txtDataAdmissao" value="#{funcionarioController.funcionario.dataAdmissao}"
+                                             mask="99/99/9999" rendered="#{!funcionarioController.funcionario.ehFreelancer}"
+                                             required="false" requiredMessage="O campo data de admissão é obrigatório."/>
+                                <p:message for="txtDataAdmissao" display="text"/>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab id="contato" title="Contato">
+                        <p:panel header="Informações sobre contato">
+                            <h:panelGrid id="grdContato" columns="3">
+                                <h:outputText value="Email*:" />
+                                <p:inputText id="txtEmail" value="#{funcionarioController.funcionario.email}" 
+                                             required="false" requiredMessage="O campo email é obrigatório."
+                                             styleClass="input-large">
+                                    <f:validator validatorId="validaEmail" />
+                                </p:inputText>
+                                <p:message for="txtEmail" display="text"/>
+
+                                <h:outputText value="Telefone*:" />
+                                <p:inputText id="txtTelefone" value="#{funcionarioController.funcionario.telefone}"
+                                             placeholder="(43) 9999-8888" 
+                                             required="false" requiredMessage="O campo telefone é obrigatório."/>
+                                <p:message for="txtTelefone" display="text" />
+
+                                <h:outputText value="Estado*:" />
+                                <p:inputText value="#{funcionarioController.funcionario.endereco.estado}" id="txtEstado"
+                                             required="false" requiredMessage="O campo estado é obrigatório."/>
+                                <p:message for="txtEstado" display="text" />
+
+                                <h:outputText value="Cidade*:" />
+                                <p:inputText value="#{funcionarioController.funcionario.endereco.cidade}" id="txtCidade"
+                                             required="false" requiredMessage="O campo cidade é obrigatório."/>
+                                <p:message for="txtCidade" display="text" />
+
+                                <h:outputText value="Bairro*:" />
+                                <p:inputText value="#{funcionarioController.funcionario.endereco.bairro}" id="txtBairro"
+                                             required="false" requiredMessage="O campo bairro é obrigatório."/>
+                                <p:message for="txtBairro" display="text" />
+
+                                <h:outputText value="Rua*:" />
+                                <p:inputText value="#{funcionarioController.funcionario.endereco.logradouro}" id="txtRua"
+                                             required="false" requiredMessage="O campo rua é obrigatório."
+                                             placeholder="Rua dos viajantes, 110" styleClass="input-large"/>
+                                <p:message for="txtRua" display="text" />
+
+                                <h:outputText value="Linkedin:" />
+                                <p:inputText value="#{funcionarioController.funcionario.likedin}" id="txtLinkedin" />
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab id="academicas" title="Formação">
+                        <p:panel header="Informações sobre a formação acadêmica">
+                            <h:panelGrid id="grdNovaFormacao" columns="2">
+                                <h:outputLabel value="Nível: " />
+                                <p:selectOneMenu id="cmbNivelFormacao" value="#{funcionarioController.novaFormacao.nivel}">
+                                    <f:selectItem itemLabel="Selecione algum nível" noSelectionOption="true" />
+                                    <f:selectItems value="#{funcionarioController.niveisFormacao}" var="nf"
+                                                   itemLabel="#{nf}" itemValue="#{nf}" />
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Área: " />
+                                <p:inputText value="#{funcionarioController.novaFormacao.area}" />
+
+                            </h:panelGrid>
+                            <p:commandButton value="Adicionar" update="grdNovaFormacao, lstFormacoes"
+                                             action="#{funcionarioController.addFormacao(0)}" />
+                            <p:dataList id="lstFormacoes" value="#{funcionarioController.funcionario.formacaoAcademica}"
+                                        var="f" emptyMessage="Nenhum registro encontrado">
+                                <h:outputText value="#{f.nivel} - #{f.area}   " />
+                                <p:commandLink value="Remover" style="color: #337AB7;"
+                                               action="#{funcionarioController.removerFormacao(0)}" update="lstFormacoes">
+                                    <f:setPropertyActionListener value="#{f}" target="#{funcionarioController.novaFormacao}" />
+                                </p:commandLink>
+                            </p:dataList>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab id="habTecnicas" title="Técnicas">
+                        <p:panel header="Informações sobre habilidades técnicas">
+                            <h:panelGrid id="grdNovaHabTecnica" columns="3">
+                                <h:outputText value="Habilidades disponíveis: " />
+                                <p:selectOneMenu id="cmbHabTecnica" value="#{funcionarioController.funcHabilidade.habilidade}"
+                                                 converter="habilidadeConverter" styleClass="input-large">
+                                    <f:selectItem itemLabel="Selecione alguma" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{habilidadeController.habilidadesTecnicas}"
+                                                   var="tec" itemLabel="#{tec.nome}" itemValue="#{tec}" />
+                                </p:selectOneMenu>
+                                <p:message for="cmbHabTecnica" display="text" />
+
+                                <h:outputText value="Nível:" />
+                                <p:selectOneMenu id="cmbNivelHab" value="#{funcionarioController.funcHabilidade.nivel}">
+                                    <f:selectItem itemLabel="Selecione algum" noSelectionOption="true"/>
+                                    <f:selectItem itemLabel="Básico" itemValue="Básico" />
+                                    <f:selectItem itemLabel="Intermediário" itemValue="Intermediário" />
+                                    <f:selectItem itemLabel="Avançado" itemValue="Avançado" />
+                                </p:selectOneMenu>
+                                <p:message for="cmbNivelHab" display="text" />
+
+                                <p:commandButton value="Adicionar" update="grdNovaHabTecnica, lstHabAddTecnica"
+                                                 action="#{funcionarioController.addConhecimento(0)}"/>                                
+                            </h:panelGrid>
+
+                            <p:dataList id="lstHabAddTecnica" value="#{funcionarioController.funcionario.habilidades}"
+                                        var="c" emptyMessage="Nenhum registro encontrado">
+                                <h:outputText value="#{c.habilidade.nome} - #{c.nivel}      " />
+                                <p:commandLink value="Remover" style="color: #337AB7;"
+                                               action="#{funcionarioController.removeConhecimento(0)}" update="lstHabAddTecnica">
+                                    <f:setPropertyActionListener value="#{c}" target="#{funcionarioController.funcHabilidade}" />
+                                </p:commandLink>
+                            </p:dataList>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab id="habIdiomas" title="Idiomas">
+                        <p:panel header="Informações sobre habilidades de idioma">
+                            <h:panelGrid id="grdNovaHabIdioma" columns="3">
+                                <h:outputText value="Habilidades disponíveis: " />
+                                <p:selectOneMenu id="cmbHabIdioma" value="#{funcionarioController.funcHabilidade.habilidade}"
+                                                 converter="habilidadeConverter" styleClass="input-large">
+                                    <f:selectItem itemLabel="Selecione alguma" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{habilidadeController.habilidadesIdioma}"
+                                                   var="tec" itemLabel="#{tec.nome}" itemValue="#{tec}" />
+                                </p:selectOneMenu>
+                                <p:message for="cmbHabIdioma" display="text" />
+
+                                <h:outputText value="Nível:" />
+                                <p:selectOneMenu id="cmbNivelHabIdioma" value="#{funcionarioController.funcHabilidade.nivel}">
+                                    <f:selectItem itemLabel="Selecione algum" noSelectionOption="true"/>
+                                    <f:selectItem itemLabel="Básico" itemValue="Básico" />
+                                    <f:selectItem itemLabel="Intermediário" itemValue="Intermediário" />
+                                    <f:selectItem itemLabel="Avançado" itemValue="Avançado" />
+                                </p:selectOneMenu>
+                                <p:message for="cmbNivelHabIdioma" display="text" />
+
+                                <p:commandButton value="Adicionar" update="grdNovaHabIdioma, lstHabAddIdioma"
+                                                 action="#{funcionarioController.addConhecimento(0)}"/> 
+                            </h:panelGrid>
+
+                            <p:dataList id="lstHabAddIdioma" value="#{funcionarioController.funcionario.habilidades}"
+                                        var="c" emptyMessage="Nenhum registro encontrado">
+                                <h:outputText value="#{c.habilidade.nome} - #{c.nivel}      " />
+                                <p:commandLink value="Remover" style="color: #337AB7;"
+                                               action="#{funcionarioController.removeConhecimento(0)}" update="lstHabAddIdioma">
+                                    <f:setPropertyActionListener value="#{c}" target="#{funcionarioController.funcHabilidade}" />
+                                </p:commandLink>
+                            </p:dataList>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab id="habDominio" title="Domínio">
+                        <p:panel header="Informações sobre habilidades de domínio">
+                            <h:panelGrid id="grdNovaHabDominio" columns="3">
+                                <h:outputText value="Habilidades disponíveis: " />
+                                <p:selectOneMenu id="cmbHabDominio" value="#{funcionarioController.funcHabilidade.habilidade}"
+                                                 converter="habilidadeConverter" styleClass="input-large">
+                                    <f:selectItem itemLabel="Selecione alguma" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{habilidadeController.habilidadesDominio}"
+                                                   var="tec" itemLabel="#{tec.nome}" itemValue="#{tec}" />
+                                </p:selectOneMenu>
+                                <p:message for="cmbHabDominio" display="text" />
+
+                                <h:outputText value="Nível:" />
+                                <p:selectOneMenu id="cmbNivelHabDominio" value="#{funcionarioController.funcHabilidade.nivel}">
+                                    <f:selectItem itemLabel="Selecione algum" noSelectionOption="true"/>
+                                    <f:selectItem itemLabel="Básico" itemValue="Básico" />
+                                    <f:selectItem itemLabel="Intermediário" itemValue="Intermediário" />
+                                    <f:selectItem itemLabel="Avançado" itemValue="Avançado" />
+                                </p:selectOneMenu>
+                                <p:message for="cmbNivelHabDominio" display="text" />
+
+                                <p:commandButton value="Adicionar" update="grdNovaHabDominio, lstHabAddDominio"
+                                                 action="#{funcionarioController.addConhecimento(0)}"/> 
+                            </h:panelGrid>
+
+                            <p:dataList id="lstHabAddDominio" value="#{funcionarioController.funcionario.habilidades}"
+                                        var="c" emptyMessage="Nenhum registro encontrado">
+                                <h:outputText value="#{c.habilidade.nome} - #{c.nivel}          " />
+                                <p:commandLink value="Remover" style="color: #337AB7;"
+                                               action="#{funcionarioController.removeConhecimento(0)}" update="lstHabAddDominio">
+                                    <f:setPropertyActionListener value="#{c}" target="#{funcionarioController.funcHabilidade}" />
+                                </p:commandLink>
+                            </p:dataList>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab id="confirmacao" title="Confirmação">
+                        <p:panel header="Confirme os dados">
+                            <h:panelGrid columns="2">
+                                <h:panelGrid columns="4">   
+                                    <h:outputText value="Nome: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.nome}" />
+                                    <h:outputText value="CPF: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.cpf}" />
+                                    <h:outputText value="Sexo: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.sexo}" />
+                                    <h:outputText value="Data Nascimento: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.dataNascimento}" />
+                                    <h:outputText value="RG: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.rg}" />
+                                    <h:outputText value="Email: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.email}" />
+                                    <h:outputText value="Telefone: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.telefone}" />
+                                    <h:outputText value="Estado: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.endereco.estado}" />
+                                    <h:outputText value="Cidade: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.endereco.cidade}" />
+                                    <h:outputText value="Bairro: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.endereco.bairro}" />
+                                    <h:outputText value="Rua: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.endereco.logradouro}" />
+                                    <h:outputText value="Linkedin: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.likedin}" />                                
+                                    <h:outputText value="Data de Admissão: " />
+                                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.dataAdmissao}" />
+                                </h:panelGrid>
+                                <h:panelGrid columns="1">
+                                    <h:outputLabel value="Habilidades: " />
+                                    <p:dataList value="#{funcionarioController.funcionario.habilidades}" var="h">
+                                        <h:outputLabel value="#{h.habilidade.nome} - #{h.nivel}" />
+                                    </p:dataList>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <p:commandButton value="SALVAR" actionListener="#{funcionarioController.salvar()}" />
+                            <p:commandButton value="CANCELAR" action="#{funcionarioController.limparFuncionario()}"
+                                             oncomplete="index?faces-redirect=true" />
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>            
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+</html>
+

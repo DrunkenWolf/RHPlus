@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/dash.xhtml">
+        <ui:define name="menu">
+            <li>
+                <a href="../dash.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="../usuarios/index.html"><i class="fa fa-fw fa-user"></i> Usuários</a>
+            </li>
+            <li class="active">
+                <a href="index.html"><i class="fa fa-fw fa-users"></i> Colaboradores</a>
+            </li>
+            <li>
+                <a href="../habilidade/"><i class="fa fa-fw fa-tasks"></i> Habilidades</a>
+            </li>
+            <h:panelGrid columns="1" style="width:100%;"
+                         rendered="#{sessionController.usuarioLogado.tipoUsuario.codigo != sessionController.tipoUsuarioFuncionario}" >
+                <li>
+                    <a href="../projeto/index.html" id="link-projeto" >
+                        <i class="fa fa-fw fa-laptop"></i> Projetos
+                    </a>
+                </li>
+            </h:panelGrid>
+            <li>
+                <a href="../cargo/"><i class="fa fa-fw fa-book"></i> Perfis de Competência</a>
+            </li>
+            <li>
+                <a href="../treinamento/index.html"><i class="fa fa-fw fa-bullhorn"></i> Treinamentos</a>
+            </li>
+        </ui:define>
+
+        <ui:define name="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" style="margin-top: 0;">
+                        Colaboradores
+                    </h1>
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p class="font-media">
+                            A página de <b>Colaboradores</b> é aonde o usuário pode gerenciar
+                            os colaboradores cadastrados e visualizar o histórico de cada um.                       
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <h:form id="frmNovoFuncionario">
+                <p:commandButton action="cadastrar?faces-redirect=true" value="Novo" icon="ui-icon-plus" />
+                <p:commandLink value="Mostrar freelancers" style="float: right;" action="#{funcionarioController.mostrarFreelancers()}" 
+                               rendered="#{!funcionarioController.mostraFreelancers}" update="@form"/>
+                <p:commandLink value="Ocultar freelancers" style="float: right;" action="#{funcionarioController.ocultaFreelancers()}" 
+                               rendered="#{funcionarioController.mostraFreelancers}" update="@form"/>
+                <p:dataTable value="#{funcionarioController.funcionarios}" var="item" id="lstFuncionarios"
+                             emptyMessage="Nenhum registro encontrado" rows="10" paginator="true" style="clear: both;">
+                    <p:column headerText="Nome">
+                        #{item.nome}
+                    </p:column>
+                    <p:column headerText="CPF">
+                        #{item.cpf}
+                    </p:column>
+                    <p:column headerText="Estado">
+                        #{item.estado}
+                    </p:column>
+                    <p:column headerText="Freelancer">
+                        <h:outputLabel value="SIM" rendered="#{item.ehFreelancer}" />
+                        <h:outputLabel value="NÃO" rendered="#{!item.ehFreelancer}" />
+                    </p:column>
+                    <p:column headerText="Rating">
+                        <p:rating value="#{item.ratingGeral}" stars="5" readonly="true" />
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <p:splitButton value="Editar" update=":dlgExibeFuncionario"
+                                       action="#{funcionarioController.preparaEditar()}" >
+                            <f:setPropertyActionListener value="#{item}" target="#{funcionarioController.funcEditar}" />
+                            <p:menuitem value="Histórico" action="#{funcionarioController.preparaHistorico()}">
+                                <f:setPropertyActionListener value="#{item}" target="#{funcionarioController.funcionario}" />
+                            </p:menuitem>
+                            <p:separator />
+                            <p:menuitem value="Detalhes" update=":dlgExibeFuncionario" oncomplete="PF('dlgFuncionario').show()">
+                                <f:setPropertyActionListener value="#{item}" target="#{funcionarioController.funcionario}" /> 
+                            </p:menuitem>
+                            
+                        </p:splitButton>
+
+                    </p:column>
+                    <p:column headerText="Excluir">
+                        <p:commandButton value="Excluir" action="#{funcionarioController.excluirFuncioario()}"
+                                         update=":frmNovoFuncionario">
+                            <p:confirm header="Atenção" icon="ui-icon-alert" 
+                                       message="Você tem certeza que deseja excluir esse funcionário?" />
+                            <f:setPropertyActionListener value="#{item}" target="#{funcionarioController.funcionario}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+            <p:dialog id="dlgExibeFuncionario" widgetVar="dlgFuncionario" modal="true" appendTo="@(body)" 
+                      closeOnEscape="true" width="700" showEffect="explode" header="Detalhes">
+                Rating: <p:rating value="#{funcionarioController.funcionario.ratingGeral}" readonly="true"
+                                  stars="5" />
+                <hr />
+                <h:panelGrid columns="4">
+                    <h:outputText value="Nome: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.nome}" />
+                    <h:outputText value="CPF: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.cpf}" />
+                    <h:outputText value="Sexo: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.sexo}" />
+                    <h:outputText value="Data Nascimento: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.dataNascimento}" />
+                    <h:outputText value="RG: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.rg}" />
+                    <h:outputText value="Email: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.email}" />
+                    <h:outputText value="Telefone: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.telefone}" />
+                    <h:outputText value="Estado: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.endereco.estado}" />
+                    <h:outputText value="Cidade: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.endereco.cidade}" />
+                    <h:outputText value="Bairro: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.endereco.bairro}" />
+                    <h:outputText value="Rua: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.endereco.logradouro}" />
+                    <h:outputText value="Linkedin: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.likedin}" />
+                    <h:outputText value="Disponível: " />
+                    <p:outputLabel value="SIM" rendered="#{funcionarioController.funcionario.disponivel}"
+                                   styleClass="texto-verde" />
+                    <p:outputLabel value="NÃO" rendered="#{!funcionarioController.funcionario.disponivel}"
+                                   styleClass="texto-vermelho" />
+                    <h:outputText value="Na empresa desde: " />
+                    <p:outputLabel styleClass="negrito" value="#{funcionarioController.funcionario.dataAdmissao}" />
+                </h:panelGrid>
+                <br />
+                <p:dataList value="#{funcionarioController.funcionario.habilidades}" var="c" style="max-width: 400px;"
+                            emptyMessage="Nenhum registro encontrado">
+                    <f:facet name="header">Habilidades</f:facet>
+                    <h:outputText value="#{c.habilidade.nome} - #{c.nivel}" />
+                </p:dataList>
+                <p:dataList value="#{funcionarioController.funcionario.formacaoAcademica}" var="f" style="max-width: 400px;"
+                            emptyMessage="Nenhum registro encontrado">
+                    <f:facet name="header">Formação Acadêmica</f:facet>
+                    <h:outputText value="#{f.nivel} - #{f.area}" />
+                </p:dataList>
+                <p:commandButton value="Ok" action="#{funcionarioController.limparFuncionario()}" oncomplete="PF('dlgFuncionario').hide()" />
+            </p:dialog> 
+        </ui:define>
+
+    </ui:composition>
+</html>
+

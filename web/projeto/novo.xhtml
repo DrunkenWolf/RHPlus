@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/dash.xhtml">
+        <ui:define name="menu">
+            <li>
+                <a href="../dash.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="../usuarios/index.html"><i class="fa fa-fw fa-user"></i> Usuários</a>
+            </li>
+            <li>
+                <a href="../funcionario/"><i class="fa fa-fw fa-users"></i> Colaboradores</a>
+            </li>
+            <li>
+                <a href="../habilidade/index.html"><i class="fa fa-fw fa-tasks"></i> Habilidades</a>
+            </li>
+            <li class="active">
+                <a href="index.html"><i class="fa fa-fw fa-laptop"></i> Projetos</a>
+            </li>
+            <li>
+                <a href="../cargo/"><i class="fa fa-fw fa-book"></i> Perfis de Competência</a>
+            </li>
+            <li>
+                <a href="../treinamento/index.html"><i class="fa fa-fw fa-bullhorn"></i> Treinamentos</a>
+            </li>
+        </ui:define>
+        <ui:define name="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" style="margin-top: 0;">
+                        Incluir Projeto
+                    </h1>
+                    <h:form id="frmAjuda">
+                        <h:panelGrid id="gridAjuda" columns="1" rendered="#{projetoController.exibeAjuda}">
+                            <div class="alert alert-info alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <p class="font-media">
+                                    Nessa etapa o sistema lista os colaboradores cadastrados juntamente com o grau de 
+                                    compatibilidade e a experiência de cada colaborador no perfil de competência determinado.
+                                    <br />
+                                    O <b>Grau de Compatibilidade</b> corresponde ao quão idêntico é o perfil do colaborador
+                                    com o perfil da competência.
+                                    <br />
+                                    A <b>Experiência</b> é a média das avaliações do colaborador no perfil de competência determinado.
+                                    <br />
+                                    O botão <b>Alocar</b> aloca o colaborador no projeto.
+                                    <br />
+                                    O botão <b>Listar freelancers</b> adiciona na lista os freelancers cadastrados.
+                                </p>
+                            </div>
+                        </h:panelGrid>
+                    </h:form>
+                </div>
+            </div>
+            <p:messages autoUpdate="true" closable="true"/>
+            <h:form id="frmWzdNovoProjeto">
+
+                <p:wizard id="wzdNovoProjeto" flowListener="#{projetoController.onFlowProcess}"
+                          nextLabel="Próximo"
+                          backLabel="Voltar">
+                    <p:tab id="tabProjeto" title="Projeto">
+                        <p:panel>
+                            <h:form id="frmNovoProjeto">
+                                <fieldset>
+                                    <legend>Informações do projeto</legend>
+                                    <h:panelGrid id="grdNovoProjeto" columns="2">
+                                        <h:outputText value="Nome: " />
+                                        <p:inputText value="#{projetoController.projeto.nome}" required="false"
+                                                     styleClass="input-large"/>
+
+                                        <h:outputText value="Data início: " />
+                                        <p:calendar value="#{projetoController.projeto.dataInicio}"
+                                                    pattern="dd/MM/yyyy" mask="true" required="false"/>
+
+                                        <h:outputText value="Data término: " />
+                                        <p:calendar value="#{projetoController.projeto.dataTermino}" 
+                                                    pattern="dd/MM/yyyy" mask="true" required="false"/>
+
+                                        <h:outputText value="Descrição: " />
+                                        <p:inputTextarea value="#{projetoController.projeto.descricao}" />
+                                    </h:panelGrid>
+                                </fieldset>
+
+                            </h:form>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab id="tabCargos" title="Selecionar Perfis">
+                        <p:panel header="Gerenciar cargos do projeto">
+                            <fieldset>
+                                <legend>Cargos Necessários</legend>
+                                <p:selectManyCheckbox value="#{projetoController.cargosSelecionados}"
+                                                      layout="grid" columns="3" converter="cargoConverter">
+                                    <f:selectItems value="#{cargoController.lstCargos}" var="c"
+                                                   itemValue="#{c}" itemLabel="#{c.nome}" />
+                                </p:selectManyCheckbox>
+                            </fieldset>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab id="tabAlocar" title="Alocar Colaboradores">
+                        <h:form id="frmAlocarFunc">
+                            <center>
+                                <h:outputText value="Ações: " />
+                                <p:commandButton value="Listar freelancers" 
+                                                 process="@this"
+                                                 actionListener="#{projetoController.listaFreelancers()}"
+                                                 update="lstFuncAptos" />
+                                <!--                                <p:commandButton value="Novo treinamento" onclick="PF('dlgNovoTreinamento').show()"/>-->
+                                <p:commandButton icon="ui-icon-help" actionListener="#{projetoController.exibirAjuda()}" 
+                                                 value="Ajuda" process="@this" update=":frmAjuda" />
+                                <p:commandButton value="Cancelar" process="@this" action="#{projetoController.cancelar()}">
+                                    <p:confirm header="Atenção" icon="ui-icon-alert" message="Ao cancelar você perderá todos os dados do projeto.
+                                               Você tem certeza disso?" />
+                                </p:commandButton>
+                            </center>
+                            <p:dataTable id="lstFuncAptos" value="#{projetoController.rankFuncionarios}" var="ra"
+                                         rowStyleClass="#{ra.funcionario.ehFreelancer ? 'rowFreela' : null}"
+                                         >
+                                <p:column headerText="Colaborador">
+                                    #{ra.funcionario.nome}
+                                </p:column>
+                                <p:column headerText="Perfil de Competência">
+                                    #{ra.cargo.nome}
+                                </p:column>
+                                <p:column headerText="Compatibilidade (%)">
+                                    <h:outputLabel value="#{ra.compatibilidade}">
+                                        <f:convertNumber maxFractionDigits="1" />
+                                    </h:outputLabel>
+                                </p:column>
+                                <p:column headerText="Disponível">
+                                    <h:outputText value="SIM" styleClass="text-success"
+                                                  rendered="#{ra.funcionario.disponivel}" />
+                                    <h:outputText value="NÃO" styleClass="text-danger"
+                                                  rendered="#{!ra.funcionario.disponivel}" />
+                                </p:column>
+                                <p:column headerText="Experiência">
+                                    <p:rating readonly="true" stars="5" value="#{ra.exp}" />
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="DETALHES" icon="ui-icon-search"
+                                                     oncomplete="PF('dlgFuncionarioProj').show()" update=":dlgExibeFuncionarioProj"
+                                                     process="@this">
+                                        <f:setPropertyActionListener value="#{ra}" target="#{projetoController.ranking}"/>
+                                    </p:commandButton>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="Alocar" update="@form"
+                                                     process="@this" action="#{projetoController.alocarFuncionario()}">
+                                        <f:setPropertyActionListener value="#{ra}" target="#{projetoController.ranking}"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:form>
+
+                    </p:tab>
+                    <p:tab id="tabConfirm" title="Confirmação">
+                        <p:panel header="Confirmação">
+                            <h:outputText value="Verifique se os dados estão corretos" /><br />
+                            <h:panelGrid columns="2" >
+                                <h:outputText value="Nome do projeto: " />
+                                <p:outputLabel value="#{projetoController.projeto.nome}" styleClass="negrito" />
+
+                                <h:outputText value="Data de início: " />
+                                <p:outputLabel value="#{projetoController.projeto.dataInicio}" styleClass="negrito" >
+                                    <f:convertDateTime parent="dd/MM/yyyy" />
+                                </p:outputLabel>
+
+                                <h:outputText value="Data de término: " />
+                                <p:outputLabel value="#{projetoController.projeto.dataTermino}" styleClass="negrito" >
+                                    <f:convertDateTime parent="dd/MM/yyyy" />
+                                </p:outputLabel>
+
+                                <h:outputText value="Descrição do projeto: " />
+                                <p:outputLabel value="#{projetoController.projeto.descricao}" styleClass="negrito" />
+                            </h:panelGrid>
+                            <p:dataList id="lstEquipeEscolhidaProjeto" value="#{projetoController.projeto.funcionarios}" var="f"
+                                        emptyMessage="Nenhum registro encontrado">
+                                <f:facet name="header">Equipe selecionada</f:facet>
+                                <h:outputText value="#{f.funcionario.nome} - #{f.cargo.nome}" />
+                            </p:dataList>
+                            <p:commandButton value="SALVAR" action="#{projetoController.salvarProjeto()}" process="@this" />
+                            &nbsp;
+                            <p:commandButton value="CANCELAR" action="index?faces-redirect=true" process="@this">
+                                <p:confirm header="Confirmação" message="Se você sair irá perder todos os dados. Deseja realmente sair?" 
+                                           icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
+            </h:form>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="SIM" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="NÃO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+            <ui:include src="dlgFuncionario.xhtml" />
+            <ui:include src="dlgNovoTreinamento.xhtml" />
+        </ui:define>
+    </ui:composition>
+</html>

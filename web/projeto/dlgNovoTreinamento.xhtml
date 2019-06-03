@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <p:dialog widgetVar="dlgNovoTreinamento" closable="true" closeOnEscape="true" resizable="false"
+                  header="Novo Treinamento" appendTo="@(body)" fitViewport="true" modal="true">
+            <h:form id="frmNovoTreinamento">
+                <p:messages autoUpdate="true" showIcon="false" closable="true" />
+                <div style="float: left;">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Escolha o assunto: " />
+                        <p:selectOneMenu value="#{treinamentoController.treinamento.assunto}"
+                                         converter="habilidadeConverter">
+                            <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+                            <f:selectItems value="#{habilidadeController.habilidades}" var="h"
+                                           itemLabel="#{h.nome}" itemValue="#{h}" />
+                        </p:selectOneMenu>
+                        <h:outputText value="Data de início: " />
+                        <p:calendar value="#{treinamentoController.treinamento.dataInicio}" />
+                        <h:outputText value="Data de término: " />
+                        <p:calendar value="#{treinamentoController.treinamento.dataTermino}" />
+                        <h:outputText value="Funcionários: " />
+                        <p:selectCheckboxMenu value="#{treinamentoController.treinamento.funcionarios}"
+                                              label="Selecione" filter="true" converter="funcionarioConverter"
+                                              filterMatchMode="startsWith"
+                                              required="true" requiredMessage="É preciso adicionar pelo menos um funcionário">
+                            <p:ajax event="change"
+                                    update="@form" />
+                            <f:selectItems value="#{funcionarioController.funcionarios}" var="f"
+                                           itemLabel="#{f.nome}" itemValue="#{f}" />
+                        </p:selectCheckboxMenu>
+                    </h:panelGrid>
+                </div>
+                <div style="float: right;">
+                    <h:outputLabel value="Funcionários selecionados" />
+                    <p:dataList id="lstFuncSelecionado" emptyMessage="Nenhum funcionário selecionado"
+                                value="#{treinamentoController.treinamento.funcionarios}" var="func">
+                        <h:outputText value="#{func.nome}" />
+                    </p:dataList>
+                </div>
+                <div style="clear: both;"></div>
+                <p:commandButton value="SALVAR" icon="ui-icon-disk" 
+                                 action="#{treinamentoController.salvarTreinamento()}" update="@form :frmWzdNovoProjeto:frmAlocarFunc:lstFuncAptos" />
+                <p:commandButton value="CANCELAR" action="#{treinamentoController.limparTreinamento()}"
+                                 update="@form :frmWzdNovoProjeto:frmAlocarFunc:lstFuncAptos"/>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>
+

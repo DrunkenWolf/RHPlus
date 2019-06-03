@@ -1,0 +1,275 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:insert name="header">
+            <meta charset="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <meta name="description" content="Sistema de RH"/>
+            <meta name="author" content="Ronaldo Cesar Mengato Junior"/>
+            <link rel="shortcut icon" href="#{resource['img/favicon-32x32.png']}" type="image/x-icon" /> 
+            <h:outputStylesheet library="css" name="styles.css" />
+            <h:outputStylesheet library="css" name="bootstrap.min.css" />
+            <h:outputStylesheet library="css" name="sb-admin.css" />
+            <h:outputStylesheet library="awesome/css" name="font-awesome.css" />
+            <!--<h:outputStylesheet library="css" name="font-awesome.min.css" />-->
+            <title>RH Plus</title>
+        </ui:insert>
+    </h:head>
+    <h:body style="background: #222;">
+
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/rhplus/dash.html">RH Plus</a>
+                </div>
+                <!-- Top Menu Items -->
+                <ul class="nav navbar-right top-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> #{sessionController.usuarioLogado.nome} <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <h:form>
+                                    <i class="fa fa-fw fa-pencil-square-o"></i>
+                                    <h:commandLink style="margin-left: 20px;" value="Meus dados" action="/meusDados?faces-redirect=true"/>
+                                </h:form>
+                            </li>
+                            <li>
+                                <h:form>
+                                    <i class="fa fa-fw fa-power-off"></i>
+                                    <h:commandLink style="margin-left: 20px;" value="Sair" action="#{loginController.deslogar()}"/>
+                                </h:form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                    <ul class="nav navbar-nav side-nav">
+                        <ui:insert name="menu">
+                            <li class="active">
+                                <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="usuarios/index.html"><i class="fa fa-fw fa fa-user"></i> Usuários</a>
+                            </li>
+                            <li>
+                                <a href="funcionario/index.html"><i class="fa fa-fw fa-users"></i> Colaboradores</a>
+                            </li>
+                            <li>
+                                <a href="habilidade/index.html"><i class="fa fa-fw fa-tasks"></i> Habilidades</a>
+                            </li>
+                            <h:panelGrid columns="1" style="width:100%;"
+                                          >
+                                <li>
+                                    <a href="projeto/index.html" id="link-projeto" >
+                                        <i class="fa fa-fw fa-laptop"></i> Projetos
+                                    </a>
+                                </li>
+                            </h:panelGrid>
+                            <li>
+                                <a href="cargo/index.html"><i class="fa fa-fw fa-book"></i> Perfis de Competência</a>
+                            </li>
+                            <li>
+                                <a href="treinamento/index.html"><i class="fa fa-fw fa-bullhorn"></i> Treinamentos</a>
+                            </li>
+                            <li>
+                                <a href="../personalidade/cadastrar.html"> Teste de Personalidade</a>
+                            </li>
+                        </ui:insert>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </nav>
+
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <!-- Page Heading -->
+                    <ui:insert name="container" >
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1 class="page-header" style="margin-top: 0;">
+                                    Dashboard
+                                </h1>
+                                <div class="alert alert-info alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <p class="font-media">
+                                        Este sistema foi desenvolvido como objeto de estudo de um trabalho 
+                                        de conclusão de curso. A sua principal funcionalidade é auxiliar
+                                        os profissionais de RH no processo de alocação de pessoas em projetos 
+                                        de software.
+                                        <br />
+                                        A página de <b>Dashboard</b> mostra atalhos para os principais indicadores do sistema,
+                                        como: Funcionários, Projetos, Cargos e Habilidades.
+
+                                    </p>
+                                </div>
+                            </div>
+                            <p:messages autoUpdate="true" closable="true" showIcon="false" />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <i class="fa fa-laptop fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="huge">#{dashController.numProjetos}</div>
+                                                <div>
+                                                    <h:outputText value="Projetos!" rendered="#{dashController.numProjetos != 1}" />
+                                                    <h:outputText value="Projetos!" rendered="#{dashController.numProjetos == 1}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="projeto/">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">Ver Detalhes</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="panel panel-green">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <i class="fa fa fa-users fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="huge">#{dashController.numFuncionarios}</div>
+                                                <div>
+                                                    <h:outputText value="Funcionários!" rendered="#{dashController.numFuncionarios != 1}" />
+                                                    <h:outputText value="Funcionários!" rendered="#{dashController.numFuncionarios == 1}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="funcionario/">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">Ver Detalhes</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6">
+                                <div class="panel panel-yellow">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <i class="fa fa fa-code fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="huge">#{dashController.numCargos}</div>
+                                                <div>
+                                                    <h:outputText value="Cargos!" rendered="#{dashController.numCargos!= 1}" />
+                                                    <h:outputText value="Cargos!" rendered="#{dashController.numCargos == 1}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="cargo/">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">Ver Detalhes</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6">
+                                <div class="panel panel-red">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <i class="fa fa fa-tasks fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div class="huge">#{dashController.numHabs}</div>
+                                                <div>
+                                                    <h:outputText value="Habilidades!" rendered="#{dashController.numHabs != 1}" />
+                                                    <h:outputText value="Habilidades!" rendered="#{dashController.numHabs == 1}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="habilidade/">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">Ver Detalhes</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <p:chart type="pie" model="#{dashController.grafFuncsDisponiveis}"
+                                         style="width:400px;height:300px" rendered="#{dashController.mostrarGraficoPizza}" />
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-6">
+
+                            </div>
+                        </div>
+
+                    </ui:insert>
+                </div>
+                <ui:insert name="ajaxloading">
+                    <p:tooltip />
+                    <p:ajaxStatus>
+                        <f:facet name="start">
+                            <p:graphicImage library="img" name="loading.svg" />
+                        </f:facet>
+                    </p:ajaxStatus>
+                </ui:insert>
+            </div>
+        </div>
+        <ui:insert name="dialogAjuda">
+            <p:dialog header="Ajuda" modal="true" appendTo="@(body)" resizable="false" closable="true"
+                      closeOnEscape="true">
+                <p:ajax event="close" listener="#{sessionController.limparAjuda()}" update="@this" />
+                <p:outputLabel escape="true" value="#{sessionController.textoAjuda}" />
+            </p:dialog>
+        </ui:insert>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode"
+                         header="Confirmação">
+            <p:commandButton value="SIM" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton value="NÃO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
+        <h:outputScript library="js" name="jquery.js" />
+        <script>
+            $.noConflict();
+        </script>
+        <h:outputScript library="js" name="bootstrap.min.js" /> 
+    </h:body>
+</html>
+

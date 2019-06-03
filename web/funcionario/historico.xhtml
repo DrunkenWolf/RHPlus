@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/dash.xhtml">
+        <ui:define name="menu">
+            <li>
+                <a href="../dash.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="../usuarios/index.html"><i class="fa fa-fw fa-user"></i> Usuários</a>
+            </li>
+            <li class="active">
+                <a href="index.html"><i class="fa fa-fw fa-users"></i> Colaboradores</a>
+            </li>
+            <li>
+                <a href="../habilidade/"><i class="fa fa-fw fa-tasks"></i> Habilidades</a>
+            </li>
+            <h:panelGrid columns="1" style="width:100%;"
+                         rendered="#{sessionController.usuarioLogado.tipoUsuario.codigo != sessionController.tipoUsuarioFuncionario}" >
+                <li>
+                    <a href="../projeto/index.html" id="link-projeto" >
+                        <i class="fa fa-fw fa-laptop"></i> Projetos
+                    </a>
+                </li>
+            </h:panelGrid>
+            <li>
+                <a href="../cargo/"><i class="fa fa-fw fa-book"></i> Perfis de Competência</a>
+            </li>
+            <li>
+                <a href="../treinamento/index.html"><i class="fa fa-fw fa-bullhorn"></i> Treinamentos</a>
+            </li>
+        </ui:define>
+        <ui:define name="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" style="margin-top: 0;">
+                        Histórico do Funcionário
+                    </h1>
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p class="font-media">
+                            A página de <b>Histórico</b> lista todas as avaliações do funcionário.
+                            Uma avaliação é feita pelo gerente de projetos ao fim de cada projeto, nela o gerente
+                            informa um nota para o desempenho do funcionário em determinado cargo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <h:panelGrid columns="4" cellspacing="10">
+                <h:outputText value="Nome: " />
+                <p:outputLabel styleClass="negrito" value="#{historicoController.funcionario.nome}" />
+                <h:outputText value="&nbsp;&nbsp;&nbsp;CPF: " />
+                <p:outputLabel styleClass="negrito" value="#{historicoController.funcionario.cpf}" />
+                <h:outputText value="Geral: " />
+                <p:rating stars="5" readonly="true" value="#{historicoController.funcionario.ratingGeral}" />
+            </h:panelGrid>
+            <p:dataScroller value="#{historicoController.depoimentos}" var="dep" chunkSize="4">
+                <f:facet name="header">Histórico</f:facet>
+                <p:outputPanel>
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Projeto: " />
+                        <p:outputLabel styleClass="negrito" value="#{dep.projeto.nome}" />
+                        <h:outputText value="Data de início: " />
+                        <p:outputLabel styleClass="negrito" value="#{dep.projeto.dataInicio}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </p:outputLabel>
+                        <h:outputText value="Data de término: " />
+                        <p:outputLabel styleClass="negrito" value="#{dep.projeto.dataTermino}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </p:outputLabel>
+                        <h:outputText value="Cargo: " />
+                        <p:outputLabel styleClass="negrito" value="#{dep.cargo}" />
+                        <h:outputText value="Desempenho: " />
+                        <p:rating stars="5" readonly="true" value="#{dep.desempenho}" />
+                        <h:outputText value="Comentário: " />
+                        <p:outputLabel styleClass="negrito" value="#{dep.comentario}" />
+                    </h:panelGrid>
+                    <hr />
+                </p:outputPanel>
+            </p:dataScroller>
+            <p:commandButton value="VOLTAR" icon="ui-icon-arrowthick-1-w"
+                             action="index?faces-redirect=true" />
+        </ui:define>
+    </ui:composition>
+</html>
+

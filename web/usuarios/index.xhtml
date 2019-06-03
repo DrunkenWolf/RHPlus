@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="../dash.xhtml">
+        <ui:define name="menu">
+            <li>
+                <a href="../dash.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li class="active">
+                <a href="index.html"><i class="fa fa-fw fa fa-user"></i>  Usuários</a>
+            </li>
+            <li>
+                <a href="../funcionario/index.html"><i class="fa fa-fw fa-users"></i> Colaboradores</a>
+            </li>
+            <li>
+                <a href="../habilidade/index.html"><i class="fa fa-fw fa-tasks"></i> Habilidades</a>
+            </li>
+            <h:panelGrid columns="1" style="width:100%;"
+                         rendered="#{sessionController.usuarioLogado.tipoUsuario.codigo != sessionController.tipoUsuarioFuncionario}" >
+                <li>
+                    <a href="../projeto/index.html" id="link-projeto" >
+                        <i class="fa fa-fw fa-laptop"></i> Projetos
+                    </a>
+                </li>
+            </h:panelGrid>
+            <li>
+                <a href="../cargo/index.html"><i class="fa fa-fw fa-book"></i> Perfis de Competência</a>
+            </li>
+            <li>
+                <a href="../treinamento/index.html"><i class="fa fa-fw fa-bullhorn"></i> Treinamentos</a>
+            </li>
+            <li>
+                <a href="../personalidade/cadastrar.html">Personalidade</a>
+            </li>
+        </ui:define>
+        <ui:define name="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" style="margin-top: 0;">
+                        Usuários
+                    </h1>
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p class="font-media">
+                            Nesta página é possível visualizar e gerenciar os usuários do sistema.
+                            <br />
+                            Para cadastrar um novo usuário basta clicar no botão Novo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <h:form id="frmLstUsuarios">
+                <p:messages closable="true" showIcon="false" />
+                <p:commandButton value="Novo"
+                                 onclick="PF('dlgCadastraUsuario').show()" icon="ui-icon-plus"/>
+                <p:dataTable value="#{usuarioController.listaUsuarios}" var="usuario"
+                             emptyMessage="Nenhum registro encontrado"
+                             rows="10" paginator="true">
+                    <p:column headerText="Nome">
+                        #{usuario.nome}
+                    </p:column>
+                    <p:column headerText="Email">
+                        #{usuario.email}
+                    </p:column>
+                    <p:column headerText="Tipo">
+                        #{usuario.tipoUsuario.tipo}
+                    </p:column>            
+                    <p:column>
+                        <p:commandButton value="Editar"
+                                         oncomplete="PF('dlgCadastraUsuario').show()" update=":frmNovoUsuario">
+                            <f:setPropertyActionListener value="#{usuario}" target="#{usuarioController.usuario}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+
+            </h:form>
+            <p:dialog widgetVar="dlgCadastraUsuario" header="Novo Usuário" showEffect="fade" hideEffect="fade"
+                      appendTo="@(body)" modal="true" resizable="false" closable="true" closeOnEscape="true">
+                <p:ajax event="close" listener="#{usuarioController.limpaUsuario()}" update="@this"/>
+                <h:form id="frmNovoUsuario">
+                    <h:panelGrid columns="3">
+                        <p:outputLabel value="Nome:" />
+                        <p:inputText value="#{usuarioController.usuario.nome}" id="inptNome"
+                                     required="true" requiredMessage="O campo Nome é obrigatório"
+                                     alt="nome" styleClass="input-large"/>
+                        <p:message for="inptNome" display="text" />
+
+                        <p:outputLabel value="E-mail:" />
+                        <p:inputText value="#{usuarioController.usuario.email}" id="inptEmail"
+                                     required="true" requiredMessage="O campo E-mail é obrigatório"
+                                     alt="email" styleClass="input-large">
+                            <f:validator validatorId="validaEmail" />
+                        </p:inputText>
+                        <p:message for="inptEmail" display="text" />
+
+                        <p:outputLabel value="Tipo:" />
+                        <p:selectOneMenu required="true" requiredMessage="O campo Tipo é obrigatório."
+                                         id="cmbTipoUsuario" converter="tipoUsuarioConverter"
+                                         value="#{usuarioController.usuario.tipoUsuario}">
+                            <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+                            <f:selectItems value="#{tipoUsuarioController.tiposUsuario}" var="t"
+                                           itemLabel="#{t.tipo}" itemValue="#{t}" />
+                        </p:selectOneMenu>
+                        <p:message for="cmbTipoUsuario" display="text" /> 
+                    </h:panelGrid>
+                    <!--<p:outputLabel value="OBS: Uma senha aleatória será enviada para o e-mail informado." />-->
+                    <br />
+                    <p:ajaxStatus>
+                        <f:facet name="start">
+                            <p:outputLabel value="Enviando e-mail..." />
+                            <p:graphicImage library="img" name="loading.svg" />
+                        </f:facet>
+                    </p:ajaxStatus>
+                    <p:commandButton value="SALVAR" action="#{usuarioController.salvarUsuario()}"
+                                     update="@form :frmLstUsuarios" icon="ui-icon-disk"/>
+                    <p:commandButton value="CANCELAR"  
+                                     icon="ui-icon-cancel" immediate="true"
+                                     onclick="PF('dlgCadastraUsuario').hide()" />
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</html>
+

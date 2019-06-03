@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <p:dialog modal="true" id="dlgNovoCargo"
+                  widgetVar="novoCargoDialog" appendTo="@(body)" resizable="false">
+            <p:messages autoUpdate="true" closable="true" />
+            <h:form id="frmNovoCargo">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Nome: " />
+                    <p:inputText value="#{cargoController.cargo.nome}" id="txtCargoNome" 
+                                 title="Nome do cargo (Ex: Programador)"/>
+
+                    <h:outputText value="Habilidade: " title="A(s) habilidade(s) que o cargo exige."/>
+                    <p:selectOneMenu value="#{cargoController.habilidade}" id="cmbHabCargo"
+                                     converter="habilidadeConverter" styleClass="input-large">
+                        <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+                        <f:selectItems value="#{habilidadeController.habilidades}" var="h"
+                                       itemValue="#{h}" itemLabel="#{h.nome}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <p:commandButton value="Adicionar" actionListener="#{cargoController.adicionaHabilidade()}"
+                                 process="frmNovoCargo" update="frmNovoCargo" />
+
+                <br />
+                <p:dataTable id="lstHabCargoSelecionadas" value="#{cargoController.cargo.habilidades}" 
+                             emptyMessage="Nenhum registro encontrado" var="hab" style="width: 300px;">
+                    <f:facet name="header">Habilidades do Cargo</f:facet>
+                    <p:column>
+                        #{hab.nome}
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="REMOVER" action="#{cargoController.removeHabilidade()}" update="lstHabCargoSelecionadas" >
+                            <f:setPropertyActionListener value="#{hab}" target="#{cargoController.habilidade}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                <br />
+               
+                <p:commandButton value="SALVAR" action="#{cargoController.salvarCargo()}" 
+                                 update="@form, :frmCargo" oncomplete="PF('novoCargoDialog').hide()"/>
+                <p:commandButton value="CANCELAR" action="#{cargoController.limparCargo()}" 
+                                 oncomplete="PF('novoCargoDialog').hide()" update="@form"/>
+
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>
+

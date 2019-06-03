@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/dash.xhtml">
+        <ui:define name="menu">
+            <li>
+                <a href="../dash.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="../usuarios/index.html"><i class="fa fa-fw fa fa-user"></i> Usuários</a>
+            </li>
+            <li>
+                <a href="../funcionario/index.html"><i class="fa fa-fw fa-users"></i> Colaboradores</a>
+            </li>
+            <li>
+                <a href="../habilidade/index.html"><i class="fa fa-fw fa-tasks"></i> Habilidades</a>
+            </li>
+            <h:panelGrid columns="1" style="width:100%;"
+                         rendered="#{sessionController.usuarioLogado.tipoUsuario.codigo != sessionController.tipoUsuarioFuncionario}" >
+                <li>
+                    <a href="../projeto/index.html" id="link-projeto" >
+                        <i class="fa fa-fw fa-laptop"></i> Projetos
+                    </a>
+                </li>
+            </h:panelGrid>
+            <li>
+                <a href="../cargo/index.html"><i class="fa fa-fw fa-book"></i> Perfis de Competência</a>
+            </li>
+            <li class="active">
+                <a href="index.html"><i class="fa fa-fw fa-bullhorn"></i> Treinamentos</a>
+            </li>
+        </ui:define>
+        <ui:define name="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" style="margin-top: 0;">
+                        Treinamentos
+                    </h1>
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p class="font-media">
+                            O sistema ainda permite o gerenciamento de Treinamentos dos colaboradores.
+                            Para cadastrar um novo treinamento basta clicar em Novo, escolher a habilidade a 
+                            ser treinada e quais colaboradores participarão.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <h:form id="frmLstTreinamentos">
+                <p:messages autoUpdate="true" closable="true" showIcon="false" />
+                <p:commandButton value="Novo" icon="ui-icon-plus" 
+                                 onclick="PF('dlgNovoTreinamento').show()" />
+                <p:dataTable value="#{treinamentoController.treinamentos}" var="t"
+                             emptyMessage="Nenhum registro encontrado">
+                    <f:facet name="header">Treinamentos</f:facet>
+                    <p:column headerText="Assunto">
+                        <h:outputText value="#{t.assunto.nome}" />
+                    </p:column>
+                    <p:column headerText="Início">
+                        <h:outputText value="#{t.dataInicio}" >
+                            <f:convertDateTime pattern="dd/MM/YYYY" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Término">
+                        <h:outputText value="#{t.dataTermino}" >
+                            <f:convertDateTime pattern="dd/MM/YYYY" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Ativo">
+                        <h:outputLabel value="SIM" rendered="#{t.ativo}" />
+                        <h:outputLabel value="NÃO" rendered="#{!t.ativo}" />
+                    </p:column>
+                    <p:column headerText="Editar">
+                        <p:commandButton value="Editar" oncomplete="PF('dlgNovoTreinamento').show()"
+                                         update=":frmNovoTreinamento">
+                            <f:setPropertyActionListener target="#{treinamentoController.treinamento}"
+                                                         value="#{t}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Excluir">
+                        <p:commandButton value="Excluir" action="#{treinamentoController.excluirTreinamento()}"
+                                         update="@form">
+                            <p:confirm header="Atenção" icon="ui-icon-alert"
+                                       message="Você tem certeza que deseja excluir esse treinamento?" />
+                            <f:setPropertyActionListener target="#{treinamentoController.treinamento}"
+                                                         value="#{t}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Colaboradores">
+                        <p:commandButton value="Ver" update=":lstFuncTreinamentoDlg" oncomplete="PF('dlgLstFuncTreinamento').show()">
+                            <f:setPropertyActionListener target="#{treinamentoController.treinamento}"
+                                                         value="#{t}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <p:dialog widgetVar="dlgNovoTreinamento" closable="true" closeOnEscape="true" resizable="false"
+                      header="Novo Treinamento" appendTo="@(body)" fitViewport="true" modal="true">
+
+                <h:form id="frmNovoTreinamento">
+                    <p:messages autoUpdate="true" closable="true" showIcon="false" />
+                    <div style="float: left;">
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Escolha o assunto *: " />
+                            <p:selectOneMenu value="#{treinamentoController.treinamento.assunto}"
+                                             converter="habilidadeConverter"
+                                             required="true" requiredMessage="O campo Assunto é obrigatório">
+                                <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+                                <f:selectItems value="#{habilidadeController.habilidades}" var="h"
+                                               itemLabel="#{h.nome}" itemValue="#{h}" />
+                            </p:selectOneMenu>
+                            <h:outputText value="Data de início *: " />
+                            <p:calendar value="#{treinamentoController.treinamento.dataInicio}"
+                                        required="true" requiredMessage="O campo Data de início é obrigatório"/>
+                            <h:outputText value="Data de término *: " />
+                            <p:calendar value="#{treinamentoController.treinamento.dataTermino}" 
+                                        required="true" requiredMessage="O campo Data de término é obrigatório"/>
+                            <h:outputText value="Colaboradores: " />
+                            <p:selectCheckboxMenu value="#{treinamentoController.treinamento.funcionarios}"
+                                                  label="Selecione" filter="true" converter="funcionarioConverter"
+                                                  filterMatchMode="startsWith">
+                                <p:ajax event="change" update="lstFuncSelecionado" />
+                                <f:selectItems value="#{funcionarioController.funcionarios}" var="f"
+                                               itemLabel="#{f.nome}" itemValue="#{f}" />
+                            </p:selectCheckboxMenu>
+                        </h:panelGrid>
+                    </div>
+                    <div style="float: right;">
+                        <h:outputLabel value="Colaboradores selecionados" />
+                        <p:dataList id="lstFuncSelecionado" emptyMessage="Nenhum colaborador selecionado"
+                                    value="#{treinamentoController.treinamento.funcionarios}" var="func">
+                            <h:outputText value="#{func.nome}" />
+                        </p:dataList>
+                    </div>
+                    <div style="clear: both;"></div>
+                    <p:commandButton value="SALVAR" icon="ui-icon-disk" 
+                                     action="#{treinamentoController.salvarTreinamento()}"
+                                     update="@form :frmLstTreinamentos"/>
+                    <p:commandButton value="CANCELAR" onclick="PF('dlgNovoTreinamento').hide()"
+                                     immediate="true"/>
+                </h:form>
+            </p:dialog>
+            <p:dialog widgetVar="dlgLstFuncTreinamento" header="Colaboradores no treinamento" modal="true" appendTo="@(body)" closable="true"
+                      closeOnEscape="true" resizable="false" id="lstFuncTreinamentoDlg">
+                <h:outputText value="Colaboradores no treinamento #{treinamentoController.treinamento.assunto.nome}: "/>
+                <p:dataList value="#{treinamentoController.treinamento.funcionarios}" var="f">
+                    <p:outputLabel value="#{f.nome}" />
+                </p:dataList>
+                <h:form>
+                    <p:commandButton value="FECHAR" onclick="PF('dlgLstFuncTreinamento').hide()" />
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</html>
+

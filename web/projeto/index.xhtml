@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/dash.xhtml">
+        <ui:define name="menu">
+            <li>
+                <a href="../dash.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="../usuarios/index.html"><i class="fa fa-fw fa-user"></i> Usuários</a>
+            </li>
+            <li>
+                <a href="../funcionario/"><i class="fa fa-fw fa-users"></i> Colaboradores</a>
+            </li>
+            <li>
+                <a href="../habilidade/index.html"><i class="fa fa-fw fa-tasks"></i> Habilidades</a>
+            </li>
+            <li class="active">
+                <a href="index.html"><i class="fa fa-fw fa-laptop"></i> Projetos</a>
+            </li>
+            <li>
+                <a href="../cargo/"><i class="fa fa-fw fa-book"></i> Perfis de Competência</a>
+            </li>
+            <li>
+                <a href="../treinamento/index.html"><i class="fa fa-fw fa-bullhorn"></i> Treinamentos</a>
+            </li>
+        </ui:define>
+        <ui:define name="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" style="margin-top: 0;">
+                        Projetos
+                    </h1>
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p class="font-media">
+                            A página de <b>Projetos</b> é aonde o usuário pode gerenciar
+                            os projetos cadastrados e encerrar um projeto.
+                            <br />
+                            Para cadastrar um novo projeto basta clicar em Novo e seguir os passos indicados.
+                            Na tela de cadastro há várias etapas, uma delas é a classificação de funcionários por
+                            cargo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <p:messages closable="true" autoUpdate="true" />
+
+            <h:form id="frmLstProjetos">
+                <p:commandButton value="Novo" icon="ui-icon-plusthick" action="novo?faces-redirect=true" />
+                <p:commandLink value="Mostrar projetos finalizados" action="#{projetoController.carregaProjetoFinalizados()}"
+                               update="@form" process="@this" rendered="#{!projetoController.mostraFinalizados}" style="float: right;"/>
+                <p:commandLink value="Ocultar projetos finalizados" action="#{projetoController.ocultaProjetosFinalizados()}"
+                               update="@form" rendered="#{projetoController.mostraFinalizados}" style="float: right;" />
+
+                <p:dataTable value="#{projetoController.projetos}" var="p" id="lstProjetos"
+                             emptyMessage="Nenhum registro encontrado" rows="10" paginator="true" style="clear: both;">
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{p.nome}" />
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{p.descricao}" />
+                    </p:column>
+                    <p:column headerText="Início">
+                        <h:outputText value="#{p.dataInicio}" >
+                            <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Fim">
+                        <h:outputText value="#{p.dataTermino}" >
+                            <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Status">
+                        <h:outputText value="#{p.status}" />
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="DETALHES" icon="ui-icon-search"
+                                         oncomplete="PF('ConsultaProjetoDlg').show()"
+                                         update=":dlgConsultaProjeto" >
+                            <f:setPropertyActionListener value="#{p}" target="#{projetoController.projeto}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column>
+                        <p:commandLink styleClass="link" value="Encerrar projeto" action="#{projetoController.preparaEncerrarProjeto()}" >
+                            <f:setPropertyActionListener value="#{p}" target="#{projetoController.projeto}" />
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+                <div style="display: inline; clear: both;" ></div>
+            </h:form>
+            <ui:include src="consultar.xhtml" />
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/dash.xhtml">
+        <ui:define name="menu">
+            <li>
+                <a href="../dash.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="../usuarios/index.html"><i class="fa fa-fw fa-user"></i> Usuários</a>
+            </li>
+            <li>
+                <a href="../funcionario/"><i class="fa fa-fw fa-users"></i> Colaboradores</a>
+            </li>
+            <li class="active">
+                <a href="index.html"><i class="fa fa-fw fa-tasks"></i> Habilidades</a>
+            </li>
+            <h:panelGrid columns="1" style="width:100%;"
+                         rendered="#{sessionController.usuarioLogado.tipoUsuario.codigo != sessionController.tipoUsuarioFuncionario}" >
+                <li>
+                    <a href="../projeto/index.html" id="link-projeto" >
+                        <i class="fa fa-fw fa-laptop"></i> Projetos
+                    </a>
+                </li>
+            </h:panelGrid>
+            <li>
+                <a href="../cargo/"><i class="fa fa-fw fa-book"></i> Perfis de Competência</a>
+            </li>
+            <li>
+                <a href="../treinamento/index.html"><i class="fa fa-fw fa-bullhorn"></i> Treinamentos</a>
+            </li>
+        </ui:define>
+        <ui:define name="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" style="margin-top: 0;">
+                        Habilidades
+                    </h1>
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p class="font-media">
+                            As habilidades (ou competências) são utilizadas para definir os perfis de competência
+                            tanto dos cargos da empresa quanto dos funcionários.
+                            <br />
+                            Existe três tipos de habilidade:
+                            <ul>
+                                <li>
+                                    Técnicas: são as habilidades ligadas a área de TI, como linguagens
+                                    de programação e SGBDs.
+                                </li>
+                                <li>
+                                    Idioma: corresponde as habilidades de se comunicar, ler ou escrever em
+                                    outra língua, como inglês, espanhol e etc.
+                                </li>
+                                <li>
+                                    Domínio: habilidades geralmente relacionadas a fatores externos, como
+                                    conhecimento em Nota Fiscal, bolsa de valores e etc.
+                                </li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <h:form id="frmLstHabilidades">
+                <p:commandButton value="Nova" icon="ui-icon-plus" onclick="PF('dlgNovaHabilidade').show()" />
+                <p:dataTable id="lsthabTecnica" value="#{habilidadeController.habilidades}" 
+                             var="habTec" rows="5" paginator="true" emptyMessage="Nenhum registro encontrado">
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{habTec.nome}" />
+                    </p:column>
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{habTec.tipo}" />
+                    </p:column>
+                    <p:column headerText="Editar" width="90">
+                        <p:commandButton value="Editar" 
+                                         oncomplete="PF('dlgNovaHabilidade').show()"
+                                         update=":frmNovaHabilidade">
+                            <f:setPropertyActionListener value="#{habTec}" 
+                                                         target="#{habilidadeController.novaHabilidade}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Excluir" width="90">
+                        <p:commandButton value="Excluir" action="#{habilidadeController.removerHabilidade()}"
+                                         update="lsthabTecnica">
+                            <f:setPropertyActionListener value="#{habTec}" 
+                                                         target="#{habilidadeController.novaHabilidade}" />
+                            <p:confirm header="Confirmação" 
+                                       message="Você tem certeza que deseja excluir?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                <br />
+
+            </h:form>
+            <ui:include src="novo.xhtml" />
+        </ui:define>
+    </ui:composition>
+</html>
+

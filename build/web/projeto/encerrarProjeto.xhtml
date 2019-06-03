@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/dash.xhtml">
+        <ui:define name="menu">
+            <li>
+                <a href="../dash.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="../usuarios/index.html"><i class="fa fa-fw fa-user"></i> Usuários</a>
+            </li>
+            <li>
+                <a href="../funcionario/"><i class="fa fa-fw fa-users"></i> Colaboradores</a>
+            </li>
+            <li>
+                <a href="../habilidade/index.html"><i class="fa fa-fw fa-tasks"></i> Habilidades</a>
+            </li>
+            <li class="active">
+                <a href="index.html"><i class="fa fa-fw fa-laptop"></i> Projetos</a>
+            </li>
+            <li>
+                <a href="../cargo/"><i class="fa fa-fw fa-book"></i> Perfis de Competência</a>
+            </li>
+            <li>
+                <a href="../treinamento/index.html"><i class="fa fa-fw fa-bullhorn"></i> Treinamentos</a>
+            </li>
+        </ui:define>
+        <ui:define name="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" style="margin-top: 0;">
+                        Encerrar Projeto
+                    </h1>
+                </div>
+            </div>
+            <p:messages closable="true" autoUpdate="true" />
+            <p>
+                Para encerrar um projeto você precisa avaliar o desempenho de cada membro da equipe.<br />
+                Clique no nome do funcionário para avaliá-lo.
+            </p>
+            <h:panelGrid columns="2">
+                <h:outputText value="Projeto: " />
+                <p:outputLabel styleClass="negrito" value="#{encerrarProjetoController.projeto.nome}" />
+                <h:outputText value="Descrição: " />
+                <p:outputLabel styleClass="negrito" value="#{encerrarProjetoController.projeto.descricao}" />
+            </h:panelGrid>
+            <h:form id="frmLstEquipe">
+                <p:dataTable id="lstEquipeAvaliacao" value="#{encerrarProjetoController.projeto.funcionarios}"
+                             var="func" selectionMode="single" selection="#{encerrarProjetoController.funcionario}"
+                             rowKey="#{func.codigo}" style="width: 35%;"
+                             emptyMessage="Nenhum registro encontrado">
+                    <f:facet name="header">Equipe</f:facet>
+                    <p:ajax event="rowSelect" listener="#{encerrarProjetoController.onRowSelect}" update=":frmAvaliaFunc" />
+                    <p:ajax event="rowUnselect" listener="#{encerrarProjetoController.onRowUnselect}" update=":frmAvaliaFunc" />
+
+                    <p:column>
+                        <h:outputText value="#{func.funcionario.nome}" />
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton value="VOLTAR" action="index?faces-redirect=true" 
+                                 rendered="#{encerrarProjetoController.encerrou}" icon="ui-icon-arrowthick-1-w" />
+            </h:form>
+            <h:form id="frmAvaliaFunc">
+
+                <h:panelGrid columns="1" >
+                    <h:panelGrid columns="2" rendered="#{encerrarProjetoController.funcionario.funcionario.codigo != null}">
+                        <h:outputText value="Nome: " />
+                        <p:outputLabel styleClass="negrito" value="#{encerrarProjetoController.funcionario.funcionario.nome}" />
+                        <h:outputText value="CPF: " />
+                        <p:outputLabel styleClass="negrito" value="#{encerrarProjetoController.funcionario.funcionario.cpf}" />
+                        <h:outputText value="Cargo: " />
+                        <p:outputLabel styleClass="negrito" value="#{encerrarProjetoController.funcionario.cargo.nome}" />
+
+                        <h:outputText value="Desempenho*: " />
+                        <p:rating stars="5" value="#{encerrarProjetoController.depoimento.desempenho}"
+                                  required="true" requiredMessage="É obrigatório informar o desempenho"/>
+
+                        <h:outputText value="Comentário: " />
+                        <p:inputTextarea value="#{encerrarProjetoController.depoimento.comentario}">
+                        </p:inputTextarea>
+
+                    </h:panelGrid>
+
+                </h:panelGrid>
+                <p:commandButton value="Enviar" action="#{encerrarProjetoController.salvarDepoimento()}"
+                                 update="@form, :frmLstEquipe" rendered="#{encerrarProjetoController.funcionario.funcionario.codigo != null}"/> <br />
+            </h:form>
+            <p:dialog modal="true" id="dlgGerenciaHabilidade" widgetVar="GerenciaHabilidadeDlg">
+                <h:form id="frmGerencHabilidade">
+                    <h:panelGrid id="grdNovaHab" columns="2">
+                        <h:outputText value="Habilidades disponíveis: " rendered="#{encerrarProjetoController.novaHabilidade.codigo == null}"/>
+                        <p:selectOneMenu id="cmbHabilidades" value="#{encerrarProjetoController.novaHabilidade.habilidade}"
+                                         converter="habilidadeConverter" styleClass="input-large"
+                                         rendered="#{encerrarProjetoController.novaHabilidade.codigo == null}">
+                            <f:selectItem itemLabel="Selecione alguma" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{habilidadeController.habilidades}"
+                                           var="tec" itemLabel="#{tec.nome}" itemValue="#{tec}" />
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Habilidade: " rendered="#{encerrarProjetoController.novaHabilidade.codigo != null}"/>
+                        <p:outputLabel value="#{encerrarProjetoController.novaHabilidade.habilidade.nome}"
+                                       rendered="#{encerrarProjetoController.novaHabilidade.codigo != null}"
+                                       styleClass="negrito"/>
+
+                        <h:outputText value="Nível:" />
+                        <p:selectOneMenu id="cmbNivelHab" value="#{encerrarProjetoController.novaHabilidade.nivel}">
+                            <f:selectItem itemLabel="Selecione algum" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Básico" itemValue="Básico" />
+                            <f:selectItem itemLabel="Intermediário" itemValue="Intermediário" />
+                            <f:selectItem itemLabel="Avançado" itemValue="Avançado" />
+                        </p:selectOneMenu>
+
+                        <p:commandButton value="Adicionar" update="@form, :frmAvaliaFunc"
+                                         action="#{encerrarProjetoController.salvarHabilidade()}"
+                                         oncomplete="PF('GerenciaHabilidadeDlg').hide()"/>
+                        <p:commandButton value="Cancelar" action="#{encerrarProjetoController.limpaHabilidade()}"
+                                         oncomplete="PF('GerenciaHabilidadeDlg').hide()"
+                                         update="@form, :frmAvaliaFunc"/>
+                    </h:panelGrid>
+                </h:form>
+            </p:dialog>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="SIM" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="NÃO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </ui:define>
+    </ui:composition>
+</html>
+

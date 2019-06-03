@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>RH Plus</title>
+        <link rel="shortcut icon" href="#{resource['img/favicon-32x32.png']}" type="image/x-icon" /> 
+
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+        <h:outputStylesheet library="css" name="styles.css" />
+    </h:head>
+    <h:body>
+        <div>
+            <div class="box">
+                <p:growl autoUpdate="true" />
+                <h:form class="frmLogin" id="frmLogin">
+                    <div>
+                        <center>
+                            <h:outputLabel value="Trocar senha" style="font-family: Arial;font-size: 2.8em;"/>
+                        </center>
+                    </div>
+
+                    <h:panelGrid columns="1">
+                        <p:outputLabel value="Nova senha: " />
+                        <p:password value="#{loginController.novaSenha}" alt="email"
+                                     required="true" requiredMessage="O campo Nova senha é obrigatório" />
+                        <p:outputLabel value="Confirme: " />
+                        <p:password value="#{loginController.confirmaNovaSenha}" required="true"
+                                    requiredMessage="O campo Confirme é obrigatório"/> 
+                        <br />
+                        <h:commandButton value="ENTRAR" action="#{loginController.trocarSenha()}"
+                                         styleClass="btn btn-success" style="min-width: 100%;"/>
+                    </h:panelGrid>                    
+                </h:form>
+
+            </div>
+        </div>
+        <p:dialog widgetVar="dlgErro" modal="true" resizable="false"
+                  header="Aviso" appendTo="@(body)" closable="true" closeOnEscape="true">
+            Aviso nao implementado.
+        </p:dialog>
+    </h:body>
+</html>
+

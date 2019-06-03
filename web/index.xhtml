@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>RH Plus</title>
+        <link rel="shortcut icon" href="#{resource['img/favicon-32x32.png']}" type="image/x-icon" /> 
+
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+        <h:outputStylesheet library="css" name="styles.css" />
+    </h:head>
+    <h:body>
+
+        <div>
+            <div class="box">
+                <p:growl autoUpdate="true" />
+                <h:form class="frmLogin" id="frmLogin">
+                    <div>
+                        <center>
+                            <h:outputLabel value="RH Plus" style="font-family: Arial;font-size: 2.8em;"/>
+                        </center>
+                    </div>
+
+                    <h:panelGrid columns="1" id="grdEmailSenha">
+                        <p:outputLabel value="E-mail:" />
+                        <p:inputText value="#{loginController.email}" alt="email" />
+                        <p:outputLabel value="Senha:" rendered="#{!loginController.ehPrimeiroLogin}"/>
+                        <p:password value="#{loginController.senha}"
+                                    rendered="#{!loginController.ehPrimeiroLogin}"/>
+
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <p:selectBooleanCheckbox value="#{loginController.ehPrimeiroLogin}" >
+                            <p:ajax event="change" update="grdEmailSenha" />
+                        </p:selectBooleanCheckbox>
+                        <h:outputLabel value="Primeiro Login" />
+                    </h:panelGrid>
+                    <h:commandButton value="ENTRAR" action="#{loginController.logar()}"
+                                     styleClass="btn btn-success" style="min-width: 100%;"/>
+                </h:form>
+<!--                <h:form id="frmEsqueceuSenha">
+                    <br />
+                    <p:commandButton value="Entrar como Visitante" 
+                                     style="min-width: 100%;"
+                                     action="#{loginController.logarComoVisitante()}" />
+                    <p:commandLink styleClass="link-esqueceu-senha" value="Esqueci minha senha"
+                                   oncomplete="PF('dlgEsqueciSenha').show()" />
+                </h:form>-->
+
+            </div>
+        </div>
+        <p:dialog widgetVar="dlgEsqueciSenha" modal="true" resizable="false"
+                  header="Recuperar senha" appendTo="@(body)" closable="true" closeOnEscape="true">
+            <h:form>
+                <h:panelGrid columns="1">
+                    <h:outputText value="Email: " />
+                    <p:inputText value="#{loginController.emailRecuperaSenha}" styleClass="input-large"
+                                 required="true" />
+                </h:panelGrid>
+                <p:commandButton value="ENTRAR" action="#{loginController.esqueceuSenha()}"
+                                 update="@form, :frmLogin" oncomplete="PF('dlgEsqueciSenha').hide()"/>
+                <p:commandButton value="CANCELAR" immediate="true"
+                                 onclick="PF('dlgEsqueciSenha').hide()" />
+                <p:ajaxStatus>
+                    <f:facet name="default">
+                    </f:facet>
+
+                    <f:facet name="start">
+                        <p:graphicImage library="img" name="loading.svg" />
+                    </f:facet>
+
+                    <f:facet name="complete">
+
+                    </f:facet>
+                </p:ajaxStatus>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+

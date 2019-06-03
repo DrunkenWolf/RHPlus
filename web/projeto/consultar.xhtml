@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <p:dialog id="dlgConsultaProjeto" widgetVar="ConsultaProjetoDlg" modal="true" appendTo="@(body)"
+                  width="500" resizable="false" closable="true" closeOnEscape="true" header="Dados do projeto">
+            <h:panelGrid columns="2">
+                <h:outputText value="Nome: " />
+                <p:outputLabel value="#{projetoController.projeto.nome}" styleClass="negrito" />
+                
+                <h:outputText value="Data de início: " />
+                <p:outputLabel value="#{projetoController.projeto.dataInicio}" styleClass="negrito" >
+                    <f:convertDateTime parent="dd/MM/yyyy" />
+                </p:outputLabel>
+                
+                <h:outputText value="Data de término: " />
+                <p:outputLabel value="#{projetoController.projeto.dataTermino}" styleClass="negrito" >
+                    <f:convertDateTime parent="dd/MM/yyyy" />
+                </p:outputLabel>
+                
+                <h:outputText value="Status: " />
+                <p:outputLabel value="#{projetoController.projeto.status}" styleClass="negrito" />
+                
+                <h:outputText value="Descrição: " />
+                <p:outputLabel value="#{projetoController.projeto.descricao}" styleClass="negrito" />
+            </h:panelGrid>
+            <p:dataList id="lstEquipeProjeto" value="#{projetoController.projeto.funcionarios}" var="func">
+                <f:facet name="header">Equipe</f:facet>
+                <h:outputText value="#{func.funcionario.nome} - #{func.cargo.nome}" />
+            </p:dataList>
+            <p:commandButton value="FECHAR" icon="ui-icon-close" action="#{projetoController.limparProjeto()}"
+                             oncomplete="PF('ConsultaProjetoDlg').hide()" />
+        </p:dialog>
+    </ui:composition>
+</html>
+

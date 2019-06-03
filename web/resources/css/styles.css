@@ -1,0 +1,129 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23/02/2015, 15:33:19
+    Author     : ronaldo
+*/
+html{height: 100%;}
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #f3f3f3;
+    height: 100%;
+}
+img{
+    margin: 0;
+    padding: 0;
+}
+.box{
+    width: 384px;
+    height: 350px;
+    margin-left: -192px; /* metade da largura */
+    margin-top: -175px; /* metade da altura */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #fff;
+    border: 1px solid #DEDEDE;
+}
+.box table{
+    width: 100%;
+}
+.box form input{
+    width: 100%;
+}
+.frmLogin{
+    padding-top: 25px;
+    padding-left: 30px;
+    padding-right: 40px;
+}
+.input-large{
+    width: 300px;
+}
+.negrito{
+    font-weight: bold;
+}
+
+.texto-verde{
+    color: green;
+}
+
+.texto-vermelho{
+    color: red;
+}
+
+.txtUsuarioLogado{
+    padding: 2px;
+    color: #fff;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.link{
+    text-decoration: underline;
+    color: #1a0dab !important;
+}
+/*.btn{
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -moz-user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.btn-sucess{
+    color: #FFF;
+    background-color: #5CB85C;
+    border-color: #4CAE4C;
+}*/
+.link-esqueceu-senha{
+    display: inline-block;
+    margin-top: 14px;
+    font-family: arial;
+    font-size: 0.9em;
+    color: #4a8db8;
+}
+div.idiomas{
+    float: right;
+    margin-right: 1%;
+}
+#frmEsqueceuSenha{
+    padding-left: 30px;
+    padding-right: 40px;
+}
+#wrapper{
+    min-height: 100%;
+}
+#page-wrapper{
+    height: 100%;
+}
+.rowFreela{
+    background-color: #FCA752 !important
+}
+.font-media{
+    font-size: 1.2em;
+}
+a#link-projeto{
+    color: #9D9D9D !important;
+    width: 225px !important;
+    padding: 15px !important;
+    line-height: 20px !important;
+    position: relative !important;
+    display: block !important;
+}
+#link-projeto:hover{
+    color: #FFF !important;
+    background-color: #080808 !important;
+    text-decoration: none !important;
+}

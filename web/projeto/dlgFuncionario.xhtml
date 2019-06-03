@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <p:dialog id="dlgExibeFuncionarioProj" widgetVar="dlgFuncionarioProj" modal="true" appendTo="@(body)" 
+                  closeOnEscape="true" width="700" showEffect="explode">
+            <h:panelGrid columns="4">
+                <h:outputText value="Nome: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.nome}" />
+                <h:outputText value="CPF: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.cpf}" />
+                <h:outputText value="Sexo: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.sexo}" />
+                <h:outputText value="Data Nascimento: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.dataNascimento}" />
+                <h:outputText value="RG: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.rg}" />
+                <h:outputText value="Email: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.email}" />
+                <h:outputText value="Telefone: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.telefone}" />
+                <h:outputText value="Estado: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.endereco.estado}" />
+                <h:outputText value="Cidade: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.endereco.cidade}" />
+                <h:outputText value="Bairro: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.endereco.bairro}" />
+                <h:outputText value="Rua: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.endereco.logradouro}" />
+                <h:outputText value="Linkedin: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.likedin}" />
+                <h:outputLabel value="Cargo: " />
+                <p:outputLabel styleClass="negrito" value="#{rankingController.ranking.cargo}" />
+                <h:outputText value="Disponível: " />
+                <p:outputLabel styleClass="negrito" style="color: green;"
+                               value="SIM" rendered="#{projetoController.ranking.funcionario.disponivel}" />
+                <p:outputLabel styleClass="negrito" style="color: red;"
+                               value="NÃO" rendered="#{!projetoController.ranking.funcionario.disponivel}" />
+                <h:outputText value="Freelancer: " />
+                <p:outputLabel styleClass="negrito"
+                               value="SIM" rendered="#{projetoController.ranking.funcionario.ehFreelancer}" />
+                <p:outputLabel styleClass="negrito"
+                               value="NÃO" rendered="#{!projetoController.ranking.funcionario.ehFreelancer}" />
+            </h:panelGrid>
+            <br />
+            <h:panelGrid columns="2">
+                <p:dataList value="#{projetoController.ranking.funcionario.habilidades}" var="c" style="max-width: 400px;"
+                            emptyMessage="Nenhum registro encontrado">
+                    <f:facet name="header">Habilidades do Funcionário</f:facet>
+                    <h:outputText value="#{c.habilidade.nome} - #{c.nivel}" />
+                </p:dataList>
+                <p:dataList value="#{projetoController.ranking.cargo.habilidades}" var="c" style="max-width: 400px;"
+                            emptyMessage="Nenhum registro encontrado">
+                    <f:facet name="header">Habilidades do Cargo</f:facet>
+                    <h:outputText value="#{c.nome}" />
+                </p:dataList>
+            </h:panelGrid>
+            <p:commandButton value="Ok" action="#{projetoController.limparFuncionario()}" oncomplete="PF('dlgFuncionarioProj').hide()" />
+        </p:dialog> 
+    </ui:composition>
+</html>
+
