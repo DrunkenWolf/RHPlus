@@ -34,6 +34,8 @@ public class CargoController implements Serializable {
 
     private Cargo cargo;
     private Habilidade habilidade;
+    private Habilidade habilidadeDominio;
+    private Habilidade habilidadeIdioma;
     private List<Cargo> lstCargos;
     private final Dao cargoDao;
     private final Dao projDao;
@@ -73,10 +75,29 @@ public class CargoController implements Serializable {
     }
 
     public void adicionaHabilidade() {
-        if (!cargo.getHabilidades().contains(habilidade)) {
-            cargo.getHabilidades().add(habilidade);
-        } else {
-            JsfUtil.addErrorMessage("Esse cargo já possui essa habilidade.");
+        if(habilidade != null){
+            if (!cargo.getHabilidades().contains(habilidade)) {
+                cargo.getHabilidades().add(habilidade);
+                habilidade = null;
+            } else {
+                JsfUtil.addErrorMessage("Este perfil de competência já possui essa habilidade.");
+            }
+        }
+        if(habilidadeDominio != null){
+            if(!cargo.getHabilidades().contains(habilidadeDominio) && habilidadeDominio != null) {
+                cargo.getHabilidades().add(habilidadeDominio);
+                habilidadeDominio = null;
+            } else {
+                JsfUtil.addErrorMessage("Este perfil de competência já possui essa habilidade.");
+            }
+        }
+        if(habilidadeIdioma != null){
+            if(!cargo.getHabilidades().contains(habilidadeIdioma) && habilidadeIdioma != null) {
+                cargo.getHabilidades().add(habilidadeIdioma);
+                habilidadeIdioma = null;
+            }else {
+                JsfUtil.addErrorMessage("Este perfil de competência já possui essa habilidade.");
+            }
         }
     }
 
@@ -88,7 +109,7 @@ public class CargoController implements Serializable {
         ConfigurableNavigationHandler handler = (ConfigurableNavigationHandler) FacesContext.getCurrentInstance().getApplication().getNavigationHandler();
         cargoDao.edit(cargo);
         lstCargos = null;
-        JsfUtil.addSuccessMessage("Cargo salvo com sucesso!");
+        JsfUtil.addSuccessMessage("Perfil de Competência salvo com sucesso!");
         limparCargo();
     }
 
@@ -163,4 +184,21 @@ public class CargoController implements Serializable {
             }
         }
     }
+
+    public Habilidade getHabilidadeDominio() {
+        return habilidadeDominio;
+    }
+
+    public void setHabilidadeDominio(Habilidade habilidadeDominio) {
+        this.habilidadeDominio = habilidadeDominio;
+    }
+
+    public Habilidade getHabilidadeIdioma() {
+        return habilidadeIdioma;
+    }
+
+    public void setHabilidadeIdioma(Habilidade habilidadeIdioma) {
+        this.habilidadeIdioma = habilidadeIdioma;
+    }
+    
 }

@@ -15,11 +15,25 @@
                     <p:inputText value="#{cargoController.cargo.nome}" id="txtCargoNome" 
                                  title="Nome do cargo (Ex: Programador)"/>
 
-                    <h:outputText value="Habilidade: " title="A(s) habilidade(s) que o cargo exige."/>
-                    <p:selectOneMenu value="#{cargoController.habilidade}" id="cmbHabCargo"
+                    <h:outputText value="Habilidade Técnica: " title="A(s) habilidade(s) que o cargo exige."/>
+                    <p:selectOneMenu value="#{cargoController.habilidade}" id="cmbHabCargoTecnica"
                                      converter="habilidadeConverter" styleClass="input-large">
                         <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
-                        <f:selectItems value="#{habilidadeController.habilidades}" var="h"
+                        <f:selectItems value="#{habilidadeController.habilidadesTecnicas}" var="h"
+                                       itemValue="#{h}" itemLabel="#{h.nome}" />
+                    </p:selectOneMenu>
+                    <h:outputText value="Habilidade Domínio: " title="A(s) habilidade(s) que o cargo exige."/>
+                    <p:selectOneMenu value="#{cargoController.habilidadeDominio}" id="cmbHabCargoDominio"
+                                     converter="habilidadeConverter" styleClass="input-large">
+                        <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+                        <f:selectItems value="#{habilidadeController.habilidadesDominio}" var="h"
+                                       itemValue="#{h}" itemLabel="#{h.nome}" />
+                    </p:selectOneMenu>
+                    <h:outputText value="Habilidade Idioma: " title="A(s) habilidade(s) que o cargo exige."/>
+                    <p:selectOneMenu value="#{cargoController.habilidadeIdioma}" id="cmbHabCargoIdioma"
+                                     converter="habilidadeConverter" styleClass="input-large">
+                        <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+                        <f:selectItems value="#{habilidadeController.habilidadesIdioma}" var="h"
                                        itemValue="#{h}" itemLabel="#{h.nome}" />
                     </p:selectOneMenu>
                 </h:panelGrid>
