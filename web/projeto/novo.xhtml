@@ -90,9 +90,9 @@
                         </p:panel>
                     </p:tab>
                     <p:tab id="tabCargos" title="Selecionar Perfis">
-                        <p:panel header="Gerenciar cargos do projeto">
+                        <p:panel header="Gerenciar perfis de competência do projeto">
                             <fieldset>
-                                <legend>Cargos Necessários</legend>
+                                <legend>Perfis de Competência Necessários</legend>
                                 <p:selectManyCheckbox value="#{projetoController.cargosSelecionados}"
                                                       layout="grid" columns="3" converter="cargoConverter">
                                     <f:selectItems value="#{cargoController.lstCargos}" var="c"
@@ -137,7 +137,7 @@
                                     <h:outputText value="NÃO" styleClass="text-danger"
                                                   rendered="#{!ra.funcionario.disponivel}" />
                                 </p:column>
-                                <p:column headerText="Experiência">
+                                <p:column headerText="Desempenho">
                                     <p:rating readonly="true" stars="5" value="#{ra.exp}" />
                                 </p:column>
                                 <p:column>
