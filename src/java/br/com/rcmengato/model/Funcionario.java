@@ -85,6 +85,86 @@ public class Funcionario implements Serializable, Comparable<Funcionario>{
     private Integer otimista;
     private Integer critico;
 
+    
+    //8 PERFIS DO MODELO BigFive
+    private Integer semeador;
+    private Integer insvestigador;
+    private Integer monitor;
+    private Integer coordenador;
+    private Integer formatador;
+    private Integer implementador;
+    private Integer trabEquip;
+    private Integer complementador;
+    
+    
+    
+    public Integer getSemeador() {
+        return semeador;
+    }
+
+    public void setSemeador(Integer semeador) {
+        this.semeador = semeador;
+    }
+
+    public Integer getInsvestigador() {
+        return insvestigador;
+    }
+
+    public void setInsvestigador(Integer insvestigador) {
+        this.insvestigador = insvestigador;
+    }
+
+    public Integer getMonitor() {
+        return monitor;
+    }
+
+    public void setMonitor(Integer monitor) {
+        this.monitor = monitor;
+    }
+
+    public Integer getCoordenador() {
+        return coordenador;
+    }
+
+    public void setCoordenador(Integer coordenador) {
+        this.coordenador = coordenador;
+    }
+
+    public Integer getFormatador() {
+        return formatador;
+    }
+
+    public void setFormatador(Integer formatador) {
+        this.formatador = formatador;
+    }
+
+    public Integer getImplementador() {
+        return implementador;
+    }
+
+    public void setImplementador(Integer implementador) {
+        this.implementador = implementador;
+    }
+
+    public Integer getTrabEquip() {
+        return trabEquip;
+    }
+
+    public void setTrabEquip(Integer trabEquip) {
+        this.trabEquip = trabEquip;
+    }
+
+    public Integer getComplementador() {
+        return complementador;
+    }
+    public void setComplementador(Integer complementador) {
+        this.complementador = complementador;
+    }
+ 
+    
+    
+    
+    
     public Integer getCooperativo() {
         return cooperativo;
     }
