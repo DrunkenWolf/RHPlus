@@ -40,14 +40,14 @@
                     <h:commandButton value="ENTRAR" action="#{loginController.logar()}"
                                      styleClass="btn btn-success" style="min-width: 100%;"/>
                 </h:form>
-<!--                <h:form id="frmEsqueceuSenha">
-                    <br />
-                    <p:commandButton value="Entrar como Visitante" 
-                                     style="min-width: 100%;"
-                                     action="#{loginController.logarComoVisitante()}" />
-                    <p:commandLink styleClass="link-esqueceu-senha" value="Esqueci minha senha"
-                                   oncomplete="PF('dlgEsqueciSenha').show()" />
-                </h:form>-->
+                <!--                <h:form id="frmEsqueceuSenha">
+                                    <br />
+                                    <p:commandButton value="Entrar como Visitante" 
+                                                     style="min-width: 100%;"
+                                                     action="#{loginController.logarComoVisitante()}" />
+                                    <p:commandLink styleClass="link-esqueceu-senha" value="Esqueci minha senha"
+                                                   oncomplete="PF('dlgEsqueciSenha').show()" />
+                                </h:form>-->
 
             </div>
         </div>
@@ -77,6 +77,8 @@
                 </p:ajaxStatus>
             </h:form>
         </p:dialog>
+        <br />
+        <h:link outcome="welcomePrimefaces" value="Página de boas-vindas do Primefaces" />
     </h:body>
 </html>
 

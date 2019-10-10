@@ -62,12 +62,185 @@ public class Funcionario implements Serializable, Comparable<Funcionario>{
     
     @OneToMany(mappedBy = "funcionario", fetch = FetchType.EAGER)
     private List<ProjetoFuncionario> projetos;
+    
 
+
+    //18 FACETAS REFERENTES AO QUESTIONARIO // Integer referente à porcentagem de afinidade com a faceta (min 0, max 100)
+    private Integer altruista;
+    private Integer cooperativo;
+    private Integer sociavel;
+    private Integer entusiastico;
+    private Integer energetico;
+    private Integer confiante;
+    private Integer confiavel;
+    private Integer eficiente;
+    private Integer minucioso;
+    private Integer organizado;
+    private Integer engenhoso;
+    private Integer inteligencia;
+    private Integer pratico;
+    private Integer simpatico;
+    private Integer instavel;
+    private Integer assertividade;
+    private Integer otimista;
+    private Integer critico;
+
+    public Integer getCooperativo() {
+        return cooperativo;
+    }
+
+    public void setCooperativo(Integer cooperativo) {
+        this.cooperativo = cooperativo;
+    }
+
+    public Integer getSociavel() {
+        return sociavel;
+    }
+
+    public void setSociavel(Integer sociavel) {
+        this.sociavel = sociavel;
+    }
+
+    public Integer getEntusiastico() {
+        return entusiastico;
+    }
+
+    public void setEntusiastico(Integer entusiastico) {
+        this.entusiastico = entusiastico;
+    }
+
+    public Integer getEnergetico() {
+        return energetico;
+    }
+
+    public void setEnergetico(Integer energetico) {
+        this.energetico = energetico;
+    }
+
+    public Integer getConfiante() {
+        return confiante;
+    }
+
+    public void setConfiante(Integer confiante) {
+        this.confiante = confiante;
+    }
+
+    public Integer getConfiavel() {
+        return confiavel;
+    }
+
+    public void setConfiavel(Integer confiavel) {
+        this.confiavel = confiavel;
+    }
+
+    public Integer getEficiente() {
+        return eficiente;
+    }
+
+    public void setEficiente(Integer eficiente) {
+        this.eficiente = eficiente;
+    }
+
+    public Integer getMinucioso() {
+        return minucioso;
+    }
+
+    public void setMinucioso(Integer minucioso) {
+        this.minucioso = minucioso;
+    }
+
+    public Integer getOrganizado() {
+        return organizado;
+    }
+
+    public void setOrganizado(Integer organizado) {
+        this.organizado = organizado;
+    }
+
+    public Integer getEngenhoso() {
+        return engenhoso;
+    }
+
+    public void setEngenhoso(Integer engenhoso) {
+        this.engenhoso = engenhoso;
+    }
+
+    public Integer getInteligencia() {
+        return inteligencia;
+    }
+
+    public void setInteligencia(Integer inteligencia) {
+        this.inteligencia = inteligencia;
+    }
+
+    public Integer getPratico() {
+        return pratico;
+    }
+
+    public void setPratico(Integer pratico) {
+        this.pratico = pratico;
+    }
+
+    public Integer getSimpatico() {
+        return simpatico;
+    }
+
+    public void setSimpatico(Integer simpatico) {
+        this.simpatico = simpatico;
+    }
+
+    public Integer getInstavel() {
+        return instavel;
+    }
+
+    public void setInstavel(Integer instavel) {
+        this.instavel = instavel;
+    }
+
+    public Integer getAssertividade() {
+        return assertividade;
+    }
+
+    public void setAssertividade(Integer assertividade) {
+        this.assertividade = assertividade;
+    }
+
+    public Integer getOtimista() {
+        return otimista;
+    }
+
+    public void setOtimista(Integer otimista) {
+        this.otimista = otimista;
+    }
+
+    public Integer getCritico() {
+        return critico;
+    }
+
+    public void setCritico(Integer critico) {
+        this.critico = critico;
+    }
+    
+    
+    
+    
+    
+    
+    public Integer getAltruista() {
+        return altruista;
+    } 
+    public void setAltruista(Integer altruista) {
+        this.altruista = altruista;
+    }
+    
+    
+    
     public Funcionario() {
         this.endereco = new Endereco();
         this.habilidades = new ArrayList<>();
         this.formacaoAcademica = new ArrayList<>();
     }
+
 
     public Integer getCodigo() {
         return codigo;
