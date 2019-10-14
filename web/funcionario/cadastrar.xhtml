@@ -165,7 +165,118 @@
                         </p:panel>
                     </p:tab>
                     <p:tab id="carac" title="Características">
-                        teste
+                        <p:panel header="Informações de personalidade">
+                            <h:panelGrid id="gridPersonalidade" columns="3"> 
+                                <h:outputText value="Altruísta:" />
+                                <p:inputText id="txtAltruista" value="#{funcionarioController.funcionario.altruista}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo altruísta é obrigatório."/>
+                                <p:message for="txtNome" display="text"/>  
+                                
+                                <h:outputText value="Cooperativo:" />
+                                <p:inputText id="txtCoop" value="#{funcionarioController.funcionario.cooperativo}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo cooperativo é obrigatório."/>
+                                <p:message for="txtNome" display="text"/> 
+                                
+                                <h:outputText value="Sociável:" />
+                                <p:inputText id="txtSoc" value="#{funcionarioController.funcionario.sociavel}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo sociável é obrigatório."/>
+                                <p:message for="txtNome" display="text"/> 
+                                
+                                <h:outputText value="Entusiástico:" />
+                                <p:inputText id="txtEntus" value="#{funcionarioController.funcionario.entusiastico}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo entusiástico é obrigatório."/>
+                                <p:message for="txtNome" display="text"/> 
+                                
+                                <h:outputText value="Energético:" />
+                                <p:inputText id="txtEnerg" value="#{funcionarioController.funcionario.energetico}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo energético é obrigatório."/>
+                                <p:message for="txtNome" display="text"/> 
+                                
+                                <h:outputText value="Confiante:" />
+                                <p:inputText id="txtConfiante" value="#{funcionarioController.funcionario.confiante}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo confiante é obrigatório."/>
+                                <p:message for="txtNome" display="text"/> 
+                                
+                                <h:outputText value="Confiável:" />
+                                <p:inputText id="txtConfiavel" value="#{funcionarioController.funcionario.confiavel}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo confiável é obrigatório."/>
+                                <p:message for="txtNome" display="text"/> 
+                                
+                                <h:outputText value="Eficiente:" />
+                                <p:inputText id="txtEfic" value="#{funcionarioController.funcionario.eficiente}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo eficiente é obrigatório."/>
+                                <p:message for="txtNome" display="text"/> 
+                                
+                                <h:outputText value="Minucioso:" />
+                                <p:inputText id="txtMinuc" value="#{funcionarioController.funcionario.minucioso}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo minucioso é obrigatório."/>
+                                <p:message for="txtNome" display="text"/> 
+                                
+                                <h:outputText value="Organizado:" />
+                                <p:inputText id="txtOrgani" value="#{funcionarioController.funcionario.organizado}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo organizado é obrigatório."/>
+                                <p:message for="txtNome" display="text"/> 
+                                
+                                <h:outputText value="Engenhoso:" />
+                                <p:inputText id="txtEngenho" value="#{funcionarioController.funcionario.engenhoso}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo engenhoso é obrigatório."/>
+                                <p:message for="txtNome" display="text"/> 
+                                
+                                <h:outputText value="Inteligência:" />
+                                <p:inputText id="txtInteli" value="#{funcionarioController.funcionario.inteligencia}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo inteligencia é obrigatório."/>
+                                <p:message for="txtNome" display="text"/>
+                                
+                                <h:outputText value="Prático:" />
+                                <p:inputText id="txtPrati" value="#{funcionarioController.funcionario.pratico}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo prático é obrigatório."/>
+                                <p:message for="txtNome" display="text"/>
+                                
+                                <h:outputText value="Simpático:" />
+                                <p:inputText id="txtSimp" value="#{funcionarioController.funcionario.simpatico}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo simpático é obrigatório."/>
+                                <p:message for="txtNome" display="text"/>
+                                
+                                <h:outputText value="Instável:" />
+                                <p:inputText id="txtInstav" value="#{funcionarioController.funcionario.instavel}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo instável é obrigatório."/>
+                                <p:message for="txtNome" display="text"/>
+                                
+                                <h:outputText value="Assertividade:" />
+                                <p:inputText id="txtAssert" value="#{funcionarioController.funcionario.assertividade}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo assertividade é obrigatório."/>
+                                <p:message for="txtNome" display="text"/>
+                                
+                                <h:outputText value="Otimista:" />
+                                <p:inputText id="txtOtimis" value="#{funcionarioController.funcionario.otimista}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo otimista é obrigatório."/>
+                                <p:message for="txtNome" display="text"/>
+                                
+                                <h:outputText value="Crítico:" />
+                                <p:inputText id="txtCritico" value="#{funcionarioController.funcionario.critico}"
+                                             placeholder="(0-100)"
+                                             styleClass="input-large" required="false" requiredMessage="O campo crítico é obrigatório."/>
+                                <p:message for="txtNome" display="text"/>
+                                
+                            </h:panelGrid>
+                        </p:panel>    
                     </p:tab>
                     <p:tab id="habTecnicas" title="Técnicas">
                         <p:panel header="Informações sobre habilidades técnicas">

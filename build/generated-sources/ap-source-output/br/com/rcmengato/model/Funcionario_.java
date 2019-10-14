@@ -11,7 +11,7 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-10-10T17:33:47")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-10-14T13:57:17")
 @StaticMetamodel(Funcionario.class)
 public class Funcionario_ { 
 
@@ -20,13 +20,19 @@ public class Funcionario_ {
     public static volatile ListAttribute<Funcionario, FormacaoAcademica> formacaoAcademica;
     public static volatile SingularAttribute<Funcionario, Boolean> ehFreelancer;
     public static volatile ListAttribute<Funcionario, ProjetoFuncionario> projetos;
+    public static volatile SingularAttribute<Funcionario, Integer> semeador;
+    public static volatile SingularAttribute<Funcionario, Integer> insvestigador;
     public static volatile SingularAttribute<Funcionario, String> dataAdmissao;
+    public static volatile SingularAttribute<Funcionario, Integer> implementador;
     public static volatile SingularAttribute<Funcionario, Integer> pratico;
+    public static volatile SingularAttribute<Funcionario, Integer> trabEquip;
+    public static volatile SingularAttribute<Funcionario, Integer> complementador;
     public static volatile SingularAttribute<Funcionario, Integer> engenhoso;
     public static volatile SingularAttribute<Funcionario, Integer> energetico;
     public static volatile SingularAttribute<Funcionario, Integer> minucioso;
     public static volatile SingularAttribute<Funcionario, String> cpf;
     public static volatile SingularAttribute<Funcionario, Boolean> disponivel;
+    public static volatile SingularAttribute<Funcionario, Integer> coordenador;
     public static volatile SingularAttribute<Funcionario, String> dataNascimento;
     public static volatile SingularAttribute<Funcionario, Integer> entusiastico;
     public static volatile SingularAttribute<Funcionario, String> email;
@@ -39,7 +45,9 @@ public class Funcionario_ {
     public static volatile SingularAttribute<Funcionario, Integer> altruista;
     public static volatile SingularAttribute<Funcionario, Integer> confiante;
     public static volatile SingularAttribute<Funcionario, String> nome;
+    public static volatile SingularAttribute<Funcionario, Integer> monitor;
     public static volatile SingularAttribute<Funcionario, Integer> confiavel;
+    public static volatile SingularAttribute<Funcionario, Integer> formatador;
     public static volatile SingularAttribute<Funcionario, Integer> cooperativo;
     public static volatile SingularAttribute<Funcionario, String> likedin;
     public static volatile SingularAttribute<Funcionario, Integer> ratingGeral;
