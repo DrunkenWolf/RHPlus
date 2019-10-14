@@ -77,25 +77,192 @@ public class Funcionario implements Serializable, Comparable<Funcionario>{
     private Integer minucioso;
     private Integer organizado;
     private Integer engenhoso;
-    private Integer inteligencia;
+    private Integer inteligente;
     private Integer pratico;
     private Integer simpatico;
     private Integer instavel;
-    private Integer assertividade;
+    private Integer assertivo;
     private Integer otimista;
     private Integer critico;
 
+
+
+    //17 CARACTERISTICAS PARA EQUIPE DE PROJETO
+
+    
+    private Integer capacidadeResolverConflito;  // Altruísta + Cooperativo / 2
+    private Integer boaComunicacao;     //Sociável
+    private Integer extroversao;        //Sociável + Entusiástico + Energético / 3
+    private Integer confiancaMutua;     //Confiável + Confiante / 2
+    private Integer criatividade;       //Engenhoso
+    private Integer inteligencia;       //Inteligente
+    private Integer organizacao;        //Organizado
+    private Integer postCritica;        //Critico
+    private Integer postOtimista;       //Otimista
+    private Integer postDetalhista;     //Minucioso
+    private Integer introversao;        //!Sociável + !Entusiástico + !Energético / 3 
+    private Integer entusiasmo;         //Entusiástico
+    private Integer praticidade;        //Pratico
+    private Integer simpatia;           //Simpático
+    private Integer estabilidade;       //!Instavel
+    private Integer assertividade;      //Assertivo
+    private Integer eficiencia;         //Eficiente
+    
+    
+    
+    
+    
+    
     
     //8 PERFIS DO MODELO BigFive
-    private Integer semeador;
-    private Integer insvestigador;
-    private Integer monitor;
-    private Integer coordenador;
-    private Integer formatador;
-    private Integer implementador;
-    private Integer trabEquip;
-    private Integer complementador;
+    private Integer semeador;       //Criativo + Inteligênte + Introversão + Confiança Mutua + Inteligencia / 5
+    private Integer insvestigador;  //Extroversão + Simpátia + Confiança Mutua + Inteligência / 4
+    private Integer monitor;        //Inteligencia + Introversão + Postura Critica + Estabilidade + Confiança Mutua + Inteligencia / 6
+    private Integer coordenador;    // Assertividade + Estabilidade + Extroversão + Confiança Mutua + Confiança Mutua + Inteligencia / 6
+    private Integer formatador;     // Assertividade + Extroversão + Práticidade + !Capacidade de resolver conflitos + Confiança Mutua + Inteligencia / 6
+    private Integer implementador;  // Práticidade + Organização + Eficiencia + Estábilidade + Confiança Mutua + Inteligencia / 6
+    private Integer trabEquip;      // Capacidade de resolver Conflitos + Boa Comunicação + Simpatia + Confiança mutua + Inteligencia / 5
+    private Integer complementador; // Postura Detalhista + Eficiencia + Introversão + Postura Otimista
     
+    
+    
+    
+    
+    public Integer getInteligente() {    
+        return inteligente;
+    }
+
+    public void setInteligente(Integer inteligente) {
+        this.inteligente = inteligente;
+    }
+
+    public Integer getAssertivo() {
+        return assertivo;
+    }
+
+    public void setAssertivo(Integer assertivo) {
+        this.assertivo = assertivo;
+    }
+
+    public Integer getCapacidadeResolverConflito() {
+        return capacidadeResolverConflito;
+    }
+
+    public void setCapacidadeResolverConflito(Integer capacidadeResolverConflito) {
+        this.capacidadeResolverConflito = capacidadeResolverConflito;
+    }
+
+    public Integer getBoaComunicacao() {
+        return boaComunicacao;
+    }
+
+    public void setBoaComunicacao(Integer boaComunicacao) {
+        this.boaComunicacao = boaComunicacao;
+    }
+
+    public Integer getExtroversao() {
+        return extroversao;
+    }
+
+    public void setExtroversao(Integer extroversao) {
+        this.extroversao = extroversao;
+    }
+
+    public Integer getConfiancaMutua() {
+        return confiancaMutua;
+    }
+
+    public void setConfiancaMutua(Integer confiançaMutua) {
+        this.confiancaMutua = confiançaMutua;
+    }
+
+    public Integer getCriatividade() {
+        return criatividade;
+    }
+
+    public void setCriatividade(Integer criatividade) {
+        this.criatividade = criatividade;
+    }
+
+    public Integer getOrganizacao() {
+        return organizacao;
+    }
+
+    public void setOrganizacao(Integer organizacao) {
+        this.organizacao = organizacao;
+    }
+
+    public Integer getPostCritica() {
+        return postCritica;
+    }
+
+    public void setPostCritica(Integer postCritica) {
+        this.postCritica = postCritica;
+    }
+
+    public Integer getPostOtimista() {
+        return postOtimista;
+    }
+
+    public void setPostOtimista(Integer postOtimista) {
+        this.postOtimista = postOtimista;
+    }
+
+    public Integer getPostDetalhista() {
+        return postDetalhista;
+    }
+
+    public void setPostDetalhista(Integer postDetalhista) {
+        this.postDetalhista = postDetalhista;
+    }
+
+    public Integer getIntroversao() {
+        return introversao;
+    }
+
+    public void setIntroversao(Integer introversao) {
+        this.introversao = introversao;
+    }
+
+    public Integer getEntusiasmo() {
+        return entusiasmo;
+    }
+
+    public void setEntusiasmo(Integer entusiasmo) {
+        this.entusiasmo = entusiasmo;
+    }
+
+    public Integer getPraticidade() {
+        return praticidade;
+    }
+
+    public void setPraticidade(Integer praticidade) {
+        this.praticidade = praticidade;
+    }
+
+    public Integer getSimpatia() {
+        return simpatia;
+    }
+
+    public void setSimpatia(Integer simpatia) {
+        this.simpatia = simpatia;
+    }
+
+    public Integer getEstabilidade() {
+        return estabilidade;
+    }
+
+    public void setEstabilidade(Integer estabilidade) {
+        this.estabilidade = estabilidade;
+    }
+
+    public Integer getEficiencia() {
+        return eficiencia;
+    }    
+    
+    public void setEficiencia(Integer eficiencia) {
+        this.eficiencia = eficiencia;
+    }
     
     
     public Integer getSemeador() {
