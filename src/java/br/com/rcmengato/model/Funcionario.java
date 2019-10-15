@@ -128,7 +128,7 @@ public class Funcionario implements Serializable, Comparable<Funcionario>{
     
     
     
-    public Integer getInteligente() {    
+    public Integer getInteligente() {
         return inteligente;
     }
 
@@ -172,8 +172,8 @@ public class Funcionario implements Serializable, Comparable<Funcionario>{
         return confiancaMutua;
     }
 
-    public void setConfiancaMutua(Integer confiançaMutua) {
-        this.confiancaMutua = confiançaMutua;
+    public void setConfiancaMutua(Integer confiancaMutua) {
+        this.confiancaMutua = confiancaMutua;
     }
 
     public Integer getCriatividade() {
@@ -656,7 +656,206 @@ public class Funcionario implements Serializable, Comparable<Funcionario>{
     public void setFormacaoAcademica(List<FormacaoAcademica> formacaoAcademica) {
         this.formacaoAcademica = formacaoAcademica;
     }
+    
+    
+    //AS FUNÇÕES ABAIXO CALCULAM AS CARACTERISTICAS DE ACORDO COM AS FACETAS OBTIDAS NO QUESTIONARIO
+    
+    public void CalcCaracteristicas(Funcionario funcionario){
+        CalcCapacidadeResolverConflito(funcionario);
+        CalcBoaComunicacao(funcionario);
+        CalcExtroversao(funcionario);
+        CalcConfiancaMutua(funcionario);
+        CalcCriatividade(funcionario);
+        CalcInteligencia(funcionario);
+        CalcOrganizacao(funcionario);
+        CalcPostCritica(funcionario);
+        CalcPostOtimista(funcionario);
+        CalcPostDetalhista(funcionario);
+        CalcIntroversao(funcionario);
+        CalcEntusiasmo(funcionario);
+        CalcPraticidade(funcionario);
+        CalcSimpatia(funcionario);
+        CalcEstabilidade(funcionario);
+        CalcAssertividade(funcionario);
+        CalcEficiencia(funcionario);
+                
+    }
+    
+    public void CalcCapacidadeResolverConflito(Funcionario funcionario){
+        Integer x;
+        
+        x = (getAltruista() + getCooperativo()) / 2;
+        
+        setCapacidadeResolverConflito(x);
+    }
+    
+    public void CalcBoaComunicacao(Funcionario funcionario){
+        setBoaComunicacao(getSociavel());
+    }
+    
+    public void CalcExtroversao(Funcionario funcionario){
+        Integer x;
+        
+        x = (getSociavel() + getEntusiastico() + getEnergetico()) / 3;
+   
+        setExtroversao(x);
+    }
+    
+    public void CalcConfiancaMutua(Funcionario funcionario){
+        Integer x;
+        
+        x = (getConfiavel() + getConfiante()) / 2;
+        
+        setConfiancaMutua(x);
+    }
+    
+    public void CalcCriatividade(Funcionario funcionario){
+        setCriatividade(getEngenhoso());
+    }
+    
+    public void CalcInteligencia(Funcionario funcionario){
+        setInteligencia(getInteligente());
+    }
+    
+    public void CalcOrganizacao(Funcionario funcionario){
+        setOrganizacao(getOrganizado());
+    }
+    
+    public void CalcPostCritica(Funcionario funcionario){
+        setPostCritica(getCritico());
+    }
+    
+    public void CalcPostOtimista(Funcionario funcionario){
+        setPostOtimista(getOtimista());
+    }
+    
+    public void CalcPostDetalhista(Funcionario funcionario){
+        setPostDetalhista(getMinucioso());
+    }
+    
+    public void CalcIntroversao(Funcionario funcionario){
+        Integer x, a, b, c;
+        
+        a = 100 - getSociavel();
+        b = 100 - getEntusiastico();
+        c = 100 - getEnergetico();
+        
+        x = (a + b + c) / 3;
+        
+        setIntroversao(x);
+    }
+    
+    public void CalcEntusiasmo(Funcionario funcionario){
+        setEntusiasmo(getEntusiastico());
+    }
+    
+    public void CalcPraticidade(Funcionario funcionario){
+        setPraticidade(getPratico());
+    }
+    
+    public void CalcSimpatia(Funcionario funcionario){
+        setSimpatia(getSimpatico());
+    }
+    
+    public void CalcEstabilidade(Funcionario funcionario){
+        setEstabilidade(100 - getInstavel());
+    }
+    
+    public void CalcAssertividade(Funcionario funcionario){
+        setAssertividade(getAssertivo());
+    }
+    
+    public void CalcEficiencia(Funcionario funcionario){
+        setEficiencia(getEficiente());
+    }
+    
+    //AS FUNÇÕES ABAIXO CALCULAM O PERFIL PSICOLOGICO DE ACORDO COM AS CARACTERISTICAS
+    
+    
+    public void CalcPerfil(Funcionario funcionario){
+        CalcSemeador(funcionario);
+        CalcInsvestigador(funcionario);
+        CalcMonitor(funcionario);
+        CalcCoordenador(funcionario);
+        CalcFormatador(funcionario);
+        CalcImplementador(funcionario);
+        CalcTrabEquip(funcionario);
+        CalcComplementador(funcionario);
 
+    }
+    
+    public void CalcSemeador(Funcionario funcionario){
+        Integer x;
+        
+        x = (getCriatividade() + getInteligencia() + getIntroversao() + getConfiancaMutua() + getInteligencia()) / 5;
+        
+        setSemeador(x);
+    }
+            
+    public void CalcInsvestigador(Funcionario funcionario){
+        Integer x;
+        
+        x = (getExtroversao() + getSimpatia() + getConfiancaMutua() + getInteligencia()) / 4;
+        
+        setInsvestigador(x);
+    }        
+    
+    public void CalcMonitor(Funcionario funcionario){
+        Integer x;
+        
+        x = (getInteligencia() + getIntroversao() + getPostCritica() + getEstabilidade() + getConfiancaMutua() + getInteligencia()) / 6;
+        
+        setMonitor(x);
+    }
+    
+    public void CalcCoordenador(Funcionario funcionario){
+        Integer x;
+        
+        x = (getAssertividade() + getEstabilidade() + getExtroversao() + getConfiancaMutua() + getConfiancaMutua() + getInteligencia()) / 6;
+        
+        setCoordenador(x);
+    }
+    
+      public void CalcFormatador(Funcionario funcionario){
+        Integer x, a;
+        
+        a = (100 - getCapacidadeResolverConflito());
+        
+        x = (getAssertividade() + getExtroversao() + getPraticidade() + a + getConfiancaMutua() + getInteligencia()) / 6;
+        
+        setFormatador(x);
+    }  
+    
+    public void CalcImplementador(Funcionario funcionario){
+        Integer x;
+    
+        x = (getPraticidade() + getOrganizacao() + getEficiencia() + getEstabilidade() + getConfiancaMutua() + getInteligencia()) / 6;
+    
+        setImplementador(x);
+    
+    }  
+    
+    public void CalcTrabEquip(Funcionario funcionario){
+        Integer x;
+        
+        x = (getCapacidadeResolverConflito() + getBoaComunicacao() + getSimpatia() + getConfiancaMutua() + getInteligencia()) / 5;
+        
+        setTrabEquip(x);
+    }
+    
+    public void CalcComplementador(Funcionario funcionario){
+        Integer x;
+        
+        x = (getPostDetalhista() + getEficiencia() + getIntroversao() + getPostOtimista() + getConfiancaMutua() + getInteligencia()) / 6;
+        
+        setComplementador(x);
+    }
+    
+    
+    
+    
+    
+    
     @Override
     public int hashCode() {
         int hash = 7;
