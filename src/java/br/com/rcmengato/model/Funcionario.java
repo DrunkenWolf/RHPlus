@@ -64,6 +64,7 @@ public class Funcionario implements Serializable, Comparable<Funcionario>{
     private List<ProjetoFuncionario> projetos;
     
 
+    
 
     //18 FACETAS REFERENTES AO QUESTIONARIO // Integer referente à porcentagem de afinidade com a faceta (min 0, max 100)
     private Integer altruista;
@@ -111,7 +112,95 @@ public class Funcionario implements Serializable, Comparable<Funcionario>{
     
     
     
+    private String primeiraCarac;
+    private String segundaCarac;
     
+    
+    public void CalcPrincipais(Funcionario funcionario){
+        Integer sortArray[];
+        sortArray = new Integer[9];
+        String texto1 = " ";
+        String texto2 = " ";
+        
+        sortArray[0] = 0;  
+        sortArray[1] = funcionario.semeador;
+        sortArray[2] = funcionario.insvestigador;
+        sortArray[3] = funcionario.monitor;
+        sortArray[4] = funcionario.coordenador;
+        sortArray[5] = funcionario.formatador;
+        sortArray[6] = funcionario.implementador;
+        sortArray[7] = funcionario.trabEquip;
+        sortArray[8] = funcionario.complementador;
+
+        int marcador1 = 0;
+        int marcador2 = 0;
+           
+        for(int i = 0; i < 9; i++){
+            if(sortArray[i] > sortArray[marcador1]){
+                marcador1 = i;
+            }
+            else if(sortArray[i] > sortArray[marcador2]){
+                marcador2 = i;
+            }
+              
+        }
+      
+        if(marcador1 == 1){
+            texto1 = "Semeador";
+        }
+        else if(marcador1 == 2){
+            texto1 = "Investigador";
+        }
+        else if(marcador1 == 3){
+            texto1 = "Monitor";
+        }        
+        else if(marcador1 == 4){
+            texto1 = "Coordenador";
+        }
+        else if(marcador1 == 5){
+            texto1 = "Formatador";
+        }
+        else if(marcador1 == 6){
+            texto1 = "Implementador";
+        }
+        else if(marcador1 == 7){
+            texto1 = "Trabalho em Equipe";
+        }
+        else if(marcador1 == 8){
+            texto1 = "Complementador";
+        }
+        
+        
+        if(marcador2 == 1){
+            texto2 = "Semeador";
+        }
+        else if(marcador2 == 2){
+            texto2 = "Investigador";
+        }
+        else if(marcador2 == 3){
+            texto2 = "Monitor";
+        }        
+        else if(marcador2 == 4){
+            texto2 = "Coordenador";
+        }
+        else if(marcador2 == 5){
+            texto2 = "Formatador";
+        }
+        else if(marcador2 == 6){
+            texto2 = "Implementador";
+        }
+        else if(marcador2 == 7){
+            texto2 = "Trabalho em Equipe";
+        }
+        else if(marcador2 == 8){
+            texto2 = "Complementador";
+        }
+                
+                
+                
+        primeiraCarac = texto1 + " = " + sortArray[marcador1] + "%";
+        segundaCarac = texto2 + " = " + sortArray[marcador2] + "%";
+    }
     
     
     //8 PERFIS DO MODELO BigFive
