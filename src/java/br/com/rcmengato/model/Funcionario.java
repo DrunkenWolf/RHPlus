@@ -108,6 +108,22 @@ public class Funcionario implements Serializable, Comparable<Funcionario>{
     private Integer estabilidade;       //!Instavel
     private Integer assertividade;      //Assertivo
     private Integer eficiencia;         //Eficiente
+
+    public String getPrimeiraCarac() {
+        return primeiraCarac;
+    }
+
+    public void setPrimeiraCarac(String primeiraCarac) {
+        this.primeiraCarac = primeiraCarac;
+    }
+
+    public String getSegundaCarac() {
+        return segundaCarac;
+    }
+
+    public void setSegundaCarac(String segundaCarac) {
+        this.segundaCarac = segundaCarac;
+    }
     
     
     
@@ -117,6 +133,8 @@ public class Funcionario implements Serializable, Comparable<Funcionario>{
     
     
     public void CalcPrincipais(Funcionario funcionario){
+        String primeira = " ";
+        String segunda = " ";
         Integer sortArray[];
         sortArray = new Integer[9];
         String texto1 = " ";
@@ -198,8 +216,11 @@ public class Funcionario implements Serializable, Comparable<Funcionario>{
                 
                 
                 
-        primeiraCarac = texto1 + " = " + sortArray[marcador1] + "%";
-        segundaCarac = texto2 + " = " + sortArray[marcador2] + "%";
+        primeira = texto1 + " = " + sortArray[marcador1] + "%";
+        segunda = texto2 + " = " + sortArray[marcador2] + "%";
+        
+        setPrimeiraCarac(primeira);
+        setSegundaCarac(segunda);
     }
     
     
@@ -211,7 +232,7 @@ public class Funcionario implements Serializable, Comparable<Funcionario>{
     private Integer formatador;     // Assertividade + Extroversão + Práticidade + !Capacidade de resolver conflitos + Confiança Mutua + Inteligencia / 6
     private Integer implementador;  // Práticidade + Organização + Eficiencia + Estábilidade + Confiança Mutua + Inteligencia / 6
     private Integer trabEquip;      // Capacidade de resolver Conflitos + Boa Comunicação + Simpatia + Confiança mutua + Inteligencia / 5
-    private Integer complementador; // Postura Detalhista + Eficiencia + Introversão + Postura Otimista
+    private Integer complementador; // Postura Detalhista + Eficiencia + Introversão + Postura Otimista + Confiança mutua + Inteligencia / 6
     
     
     

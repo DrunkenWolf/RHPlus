@@ -93,9 +93,11 @@ public class FuncionarioController implements Serializable {
     }
 
     public void salvar() {
-        //Essas duas funções calculam as caracteristicas e o perfil do colaborador
+        //Essas três funções calculam as caracteristicas, o perfil do colaborador e os 2 princiopais perfis
         funcionario.CalcCaracteristicas(funcionario);
         funcionario.CalcPerfil(funcionario);
+        funcionario.CalcPrincipais(funcionario);
+        
         
         funcionario.setDisponivel(true);
         funcionario.setEstado(EstadoConstantes.DISPONIVEL);
