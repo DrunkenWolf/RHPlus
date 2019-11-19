@@ -50,15 +50,56 @@
             <h:panelGrid columns="2">
                 <p:dataList value="#{projetoController.ranking.funcionario.habilidades}" var="c" style="max-width: 400px;"
                             emptyMessage="Nenhum registro encontrado">
-                    <f:facet name="header">Habilidades do Funcionário</f:facet>
+                    <f:facet name="header">Habilidades do Colaborador</f:facet>
                     <h:outputText value="#{c.habilidade.nome} - #{c.nivel}" />
                 </p:dataList>
                 <p:dataList value="#{projetoController.ranking.cargo.habilidades}" var="c" style="max-width: 400px;"
                             emptyMessage="Nenhum registro encontrado">
-                    <f:facet name="header">Habilidades do Cargo</f:facet>
+                    <f:facet name="header">Habilidades do Perfil de Competência</f:facet>
                     <h:outputText value="#{c.nome}" />
                 </p:dataList>
             </h:panelGrid>
+            <h:panelGrid columns="2">
+                <f:facet name="header">Características dos Colaborador</f:facet>
+                <h:outputText value="Capacidade de Resolver Conflitos: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.capacidadeResolverConflito} %" />
+                <h:outputText value="Boa Comunicação: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.boaComunicacao} %" />
+                <h:outputText value="Extroversão: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.extroversao} %" />
+                <h:outputText value="Confiança Mútua: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.confiancaMutua} %" />
+                <h:outputText value="Criatividade: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.criatividade} %" />
+                <h:outputText value="Inteligência: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.inteligencia} %" />
+                <h:outputText value="Organização: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.organizacao} %" />
+                <h:outputText value="Postura Crítica: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.postCritica} %" />
+                <h:outputText value="Postura Otimista: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.postOtimista} %" />
+                <h:outputText value="Postura Detalhista: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.postDetalhista} %" />
+                <h:outputText value="Introversão: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.introversao} %" />
+                <h:outputText value="Entusiasmo: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.entusiasmo} %" />
+                <h:outputText value="Praticidade: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.praticidade} %" />
+                <h:outputText value="Simpatia: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.simpatia} %" />
+                <h:outputText value="Estabilidade: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.estabilidade} %" />
+                <h:outputText value="Assertividade: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.assertividade} %" />
+                <h:outputText value="Eficiência: " />
+                <p:outputLabel styleClass="negrito" value="#{projetoController.ranking.funcionario.eficiencia} %"/>
+                
+                
+            </h:panelGrid>    
+                
+                
             <p:commandButton value="Ok" action="#{projetoController.limparFuncionario()}" oncomplete="PF('dlgFuncionarioProj').hide()" />
         </p:dialog> 
     </ui:composition>
