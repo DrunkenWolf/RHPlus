@@ -140,8 +140,11 @@
                                 <p:column headerText="Desempenho">
                                     <p:rating readonly="true" stars="5" value="#{ra.exp}" />
                                 </p:column>
-                                <p:column headerText="Perfil Psicológico">
+                                <p:column headerText="Perfil Principal">
                                     #{ra.funcionario.primeiraCarac}
+                                </p:column>
+                                <p:column headerText="Perfil Secundário">
+                                    #{ra.funcionario.segundaCarac}
                                 </p:column>
                                 <p:column>
                                     <p:commandButton value="DETALHES" icon="ui-icon-search"
